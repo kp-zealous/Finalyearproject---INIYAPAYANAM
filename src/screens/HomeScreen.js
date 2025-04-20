@@ -89,7 +89,7 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate('Expense')}>
           <Ionicons name="wallet" size={24} color="#007AFF" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('AIAssistant')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
           <Ionicons name="mic" size={24} color="#007AFF" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
