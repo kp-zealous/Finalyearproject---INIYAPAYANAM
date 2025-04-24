@@ -90,8 +90,12 @@ export default function HomeScreen({ navigation }) {
           <Ionicons name="wallet" size={24} color="#007AFF" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Map')}>
+          <Ionicons name="map" size={24} color="#007AFF" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('translator')}>
           <Ionicons name="mic" size={24} color="#007AFF" />
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
           <Ionicons name="airplane" size={24} color="#007AFF" />
         </TouchableOpacity>

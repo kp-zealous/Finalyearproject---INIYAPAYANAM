@@ -12,6 +12,7 @@ import TripListScreen from './src/screens/TripListScreen';
 import TripDetailsScreen from './src/screens/TripDetailsScreen';
 import EditTripScreen from './src/screens/EditTripScreen'; // ✅ Adjust path as needed
 import Map from'./src/screens/map';
+import VoiceToVoiceScreen from './src/screens/translator';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,8 @@ export default function App() {
         <Stack.Screen name="EditTrip" component={EditTripScreen} />    
         <Stack.Screen name="TripDetails" component={TripDetailsScreen} />
         <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="translator" component={VoiceToVoiceScreen} />
+
 
 
       </Stack.Navigator>
