@@ -1,8 +1,6 @@
-// src/config/firebase.js
-
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp, getApp, getApps } from "firebase/app"; // Import for app initialization
+import { getAuth } from "firebase/auth"; // Import for authentication
+import { getFirestore } from "firebase/firestore"; // Import for Firestore
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6NVrPz3jJqw2DV6AySw9BEJ8oKUnrKsA",
@@ -11,13 +9,23 @@ const firebaseConfig = {
   storageBucket: "iniyapayanam-7a79c.appspot.com",
   messagingSenderId: "966473442865",
   appId: "1:966473442865:web:6a401b08897dd07b2e1710",
-  measurementId: "G-YC10XTJX5H"
+  measurementId: "G-YC10XTJX5H",
+  // No need for `databaseURL` here if you're using Firestore
 };
 
-const app = initializeApp(firebaseConfig);
+// Check if Firebase is already initialized to avoid duplicate initialization
+let app;
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig); // Initialize the app if not already initialized
+} else {
+  app = getApp(); // Use the existing app instance if already initialized
+}
 
-// ✅ This works in Expo without custom persistence
-const auth = getAuth(app);
+// Initialize Firestore
 const db = getFirestore(app);
 
+// Initialize Firebase Auth (for authentication purposes)
+const auth = getAuth(app);
+
+// Export Firestore and Auth for use in your application
 export { auth, db };

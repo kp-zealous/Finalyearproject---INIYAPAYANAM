@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: '100%',
+    width: '110%',
   },
   fab: {
     position: 'absolute',
