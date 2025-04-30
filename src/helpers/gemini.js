@@ -21,6 +21,7 @@ export async function autoPlanTripUsingGemini(tripDetails, tripId) {
       - Comfortable and relaxed pacing
       - Cover based on the given number of days
       - Respect budget constraints
+      -importantly other than the json format dont give any extra explanation just give atleaset the max amout of days data
       
       Strictly respond in clean JSON format:
       [ 
@@ -54,6 +55,7 @@ export async function autoPlanTripUsingGemini(tripDetails, tripId) {
             })
         });
 
+
         // Step 1: Log the raw response text to check its structure
         const responseText = await response.text();  // Get the raw response text
         console.log('API Response Text:', responseText);  // Log raw response to inspect it
@@ -83,7 +85,7 @@ export async function autoPlanTripUsingGemini(tripDetails, tripId) {
         // Step 5: Parse the cleaned content
         try {
             const parsedPlan = JSON.parse(cleanContent);
-            // Save the trip plan to Firestore
+            console.log("parsed content final",parsedPlan);
             const auth = getAuth(app);
             const userId = auth.currentUser?.uid;  // Use optional chaining to avoid errors if user is null
             if (!userId) throw new Error('User not authenticated.');

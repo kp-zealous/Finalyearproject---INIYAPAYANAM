@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, 
 import { Ionicons } from '@expo/vector-icons';
 import { autoPlanTripUsingGemini } from '../helpers/gemini'; // Correct import
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'; // Firebase SDK for Firestore
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
+
 
 // Function to calculate the number of days between start and end dates
 function calculateDays(startDate, endDate) {
@@ -12,8 +15,10 @@ function calculateDays(startDate, endDate) {
 }
 
 export default function TripPlanScreen({ route, navigation }) {
-  const { trip, userId } = route.params; // Assumed userId is passed from the previous screen
-  console.log('UserID:', userId);
+  const { trip} = route.params; // Assumed userId is passed from the previous screen
+  const userId=trip.userId;
+  const tripId=trip.tripId;
+  console.log('UserID:', trip.userId);
   console.log('TripID:', trip.tripId);
 
   const [tripPlan, setTripPlan] = useState([]); // Holds the trip plan
@@ -26,10 +31,8 @@ export default function TripPlanScreen({ route, navigation }) {
     console.log('Route Params:', route.params); // Add this to check what is being passed
     if (route.params) {
       const { trip, userId } = route.params;
-      console.log('UserID:', userId);
-      console.log('TripID:', trip.tripId);
     }
-    if (userId && trip && trip.tripId) {
+    if (userId && trip && tripId) {
       fetchExistingTripPlan();
     } else {
       console.error('userId or trip.tripId is missing');
@@ -56,9 +59,9 @@ export default function TripPlanScreen({ route, navigation }) {
         const savedPlan = docSnap.data();
         console.log('Fetched data:', savedPlan);
         
-        if (savedPlan.plan && savedPlan.tripDetails) {
+        if (savedPlan.plan) {
           setTripPlan(savedPlan.plan);
-          setPreviousTripData(savedPlan.tripDetails);
+          setPreviousTripData(savedPlan.plan);
         } else {
           console.log('Missing plan or tripDetails in the data');
         }
@@ -99,8 +102,10 @@ export default function TripPlanScreen({ route, navigation }) {
       const tripDetails = {
         destination: trip.destination,
         budget: trip.budget,
-        transportModes: trip.transportModes,
-        days: days,
+        transportModes: Array.isArray(trip.transportModes)
+        ? trip.transportModes
+        : trip.transportModes ? [trip.transportModes] : [],
+            days: days,
         people: people,
       };
 
@@ -110,7 +115,7 @@ export default function TripPlanScreen({ route, navigation }) {
       }
 
       const generatedPlan = await autoPlanTripUsingGemini(tripDetails, trip.tripId); // Using the imported function
-
+      
       if (!generatedPlan || generatedPlan.length === 0) {
         console.error('No trip plan generated.');
         Alert.alert('Plan Generation Failed', 'No trip plan generated. Please check the input or the service.');
@@ -146,6 +151,44 @@ export default function TripPlanScreen({ route, navigation }) {
     }
   };
 
+  const downloadTripPlan = async () => {
+    try {
+      const docRef = doc(db, 'trip_plans', `${userId}-${trip.tripId}`);
+      const docSnap = await getDoc(docRef);
+  
+      if (!docSnap.exists()) {
+        Alert.alert('Not Found', 'No saved trip plan found.');
+        return;
+      }
+  
+      const { tripData, plan } = docSnap.data();
+  
+      // Prepare HTML
+      let htmlContent = `<h1>${tripData.destination} Trip Plan</h1>`;
+      plan.forEach((day) => {
+        htmlContent += `<h2>Day ${day.day} - ${day.date}</h2><ul>`;
+        day.plan?.forEach((activity) => {
+          htmlContent += `<li><b>${activity.time}</b>: ${activity.activity} (Distance: ${activity.distance})</li>`;
+        });
+        htmlContent += `</ul>`;
+      });
+  
+      // Create PDF from HTML
+      const { uri } = await Print.printToFileAsync({ html: htmlContent });
+  
+      // Share the PDF (download or open)
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(uri);
+      } else {
+        Alert.alert('Sharing Unavailable', 'Cannot share the PDF on this device.');
+      }
+  
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      Alert.alert('Error', 'Failed to generate and share trip plan.');
+    }
+  };
+  
   // Render a day of the trip
   const renderRoadMapDay = (item) => {
     return (
@@ -154,8 +197,8 @@ export default function TripPlanScreen({ route, navigation }) {
           <Text style={styles.dayTitle}>Day {item.day}</Text>
           <Text style={styles.dateText}>{item.date}</Text>
         </View>
-        {item.activities && Array.isArray(item.activities) && item.activities.length > 0 ? (
-          item.activities.map((activity, index) => (
+        {item.plan && Array.isArray(item.plan) && item.plan.length > 0 ? (
+          item.plan.map((activity, index) => (
             <View key={index} style={styles.placeItem}>
               <Text style={styles.timeText}>{activity.time}</Text>
               <Text style={styles.placeText}>{activity.activity}</Text>
@@ -189,6 +232,10 @@ export default function TripPlanScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       )}
+            <TouchableOpacity style={styles.downloadButton} onPress={downloadTripPlan}>
+        <Text style={styles.downloadText}>Download Trip Plan</Text>
+      </TouchableOpacity>
+
 
       <View style={styles.navbar}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
@@ -301,4 +348,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  downloadButton: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  downloadText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
 });

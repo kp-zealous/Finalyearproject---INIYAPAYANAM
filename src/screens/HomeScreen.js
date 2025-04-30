@@ -49,6 +49,10 @@ export default function HomeScreen({ navigation }) {
             style={styles.avatar}
           />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.avatar} onPress={() => navigation.navigate('emergency_contact')}>
+        <Ionicons name="call" size={28} color="#4caf50" />
+      </TouchableOpacity>
+
       </View>
 
       <Text style={styles.subTitle}>Welcome, {user?.displayName || user?.email} 👋</Text>
