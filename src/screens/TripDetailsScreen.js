@@ -150,6 +150,10 @@ export default function TripDetailsScreen({ route }) {
         >
           <Text style={styles.mapButtonText}>🗺️ View Trip Map</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Expense', { tripId, userId })} style={styles.mapButton}
+        >
+          <Text style={styles.mapButtonText}>🗺️ View Trip Expense</Text>
+          </TouchableOpacity>
 
         {/* Buttons Section: Edit and Delete */}
         <View style={styles.buttonContainer}>
