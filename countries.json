@@ -6,144 +6,296 @@
         {
           "name": "Tamil Nadu",
           "cities": [
-            {"name": "Chennai", "email": "chennai_feedback@example.com"},
-            {"name": "Coimbatore", "email": "coimbatore_feedback@example.com"},
-            {"name": "Madurai", "email": "madurai_feedback@example.com"},
-            {"name": "Salem", "email": "salem_feedback@example.com"},
-            {"name": "Tiruchirappalli", "email": "tiruchirappalli_feedback@example.com"},
-            {"name": "Erode", "email": "erode_feedback@example.com"},
-            {"name": "Vellore", "email": "vellore_feedback@example.com"},
-            {"name": "Dindigul", "email": "dindigul_feedback@example.com"},
-            {"name": "Chidambaram", "email": "chidambaram_feedback@example.com"},
-            {"name": "Thanjavur", "email": "thanjavur_feedback@example.com"}
+            { "name": "Chennai", "feedback_email": "feedback.chennai@india.com", "complaint_email": "complaint.chennai@india.com" },
+            { "name": "Coimbatore", "feedback_email": "feedback.coimbatore@india.com", "complaint_email": "complaint.coimbatore@india.com" },
+            { "name": "Madurai", "feedback_email": "feedback.madurai@india.com", "complaint_email": "complaint.madurai@india.com" },
+            { "name": "Tiruchirappalli", "feedback_email": "feedback.trichy@india.com", "complaint_email": "complaint.trichy@india.com" },
+            { "name": "Salem", "feedback_email": "feedback.salem@india.com", "complaint_email": "complaint.salem@india.com" }
           ]
         },
         {
           "name": "Maharashtra",
           "cities": [
-            {"name": "Mumbai", "email": "mumbai_feedback@example.com"},
-            {"name": "Pune", "email": "pune_feedback@example.com"},
-            {"name": "Nagpur", "email": "nagpur_feedback@example.com"},
-            {"name": "Nashik", "email": "nashik_feedback@example.com"},
-            {"name": "Aurangabad", "email": "aurangabad_feedback@example.com"},
-            {"name": "Thane", "email": "thane_feedback@example.com"},
-            {"name": "Solapur", "email": "solapur_feedback@example.com"},
-            {"name": "Kolhapur", "email": "kolhapur_feedback@example.com"},
-            {"name": "Jalgaon", "email": "jalgaon_feedback@example.com"},
-            {"name": "Latur", "email": "latur_feedback@example.com"}
+            { "name": "Mumbai", "feedback_email": "feedback.mumbai@india.com", "complaint_email": "complaint.mumbai@india.com" },
+            { "name": "Pune", "feedback_email": "feedback.pune@india.com", "complaint_email": "complaint.pune@india.com" },
+            { "name": "Nagpur", "feedback_email": "feedback.nagpur@india.com", "complaint_email": "complaint.nagpur@india.com" },
+            { "name": "Nashik", "feedback_email": "feedback.nashik@india.com", "complaint_email": "complaint.nashik@india.com" },
+            { "name": "Aurangabad", "feedback_email": "feedback.aurangabad@india.com", "complaint_email": "complaint.aurangabad@india.com" }
           ]
         },
         {
           "name": "Karnataka",
           "cities": [
-            {"name": "Bengaluru", "email": "bengaluru_feedback@example.com"},
-            {"name": "Mysuru", "email": "mysuru_feedback@example.com"},
-            {"name": "Hubballi", "email": "hubballi_feedback@example.com"},
-            {"name": "Mangalore", "email": "mangalore_feedback@example.com"},
-            {"name": "Belagavi", "email": "belagavi_feedback@example.com"},
-            {"name": "Shivamogga", "email": "shivamogga_feedback@example.com"},
-            {"name": "Tumkur", "email": "tumkur_feedback@example.com"},
-            {"name": "Davangere", "email": "davangere_feedback@example.com"},
-            {"name": "Chitradurga", "email": "chitradurga_feedback@example.com"},
-            {"name": "Raichur", "email": "raichur_feedback@example.com"}
+            { "name": "Bengaluru", "feedback_email": "feedback.bangalore@india.com", "complaint_email": "complaint.bangalore@india.com" },
+            { "name": "Mysuru", "feedback_email": "feedback.mysore@india.com", "complaint_email": "complaint.mysore@india.com" },
+            { "name": "Mangaluru", "feedback_email": "feedback.mangalore@india.com", "complaint_email": "complaint.mangalore@india.com" },
+            { "name": "Hubli", "feedback_email": "feedback.hubli@india.com", "complaint_email": "complaint.hubli@india.com" },
+            { "name": "Belagavi", "feedback_email": "feedback.belagavi@india.com", "complaint_email": "complaint.belagavi@india.com" }
           ]
         },
         {
-          "name": "Andhra Pradesh",
+          "name": "Kerala",
           "cities": [
-            {"name": "Visakhapatnam", "email": "visakhapatnam_feedback@example.com"},
-            {"name": "Vijayawada", "email": "vijayawada_feedback@example.com"},
-            {"name": "Guntur", "email": "guntur_feedback@example.com"},
-            {"name": "Kurnool", "email": "kurnool_feedback@example.com"},
-            {"name": "Rajahmundry", "email": "rajahmundry_feedback@example.com"},
-            {"name": "Nellore", "email": "nellore_feedback@example.com"},
-            {"name": "Tirupati", "email": "tirupati_feedback@example.com"},
-            {"name": "Chittoor", "email": "chittoor_feedback@example.com"},
-            {"name": "Kadapa", "email": "kadapa_feedback@example.com"},
-            {"name": "Anantapur", "email": "anantapur_feedback@example.com"}
+            { "name": "Kochi", "feedback_email": "feedback.kochi@india.com", "complaint_email": "complaint.kochi@india.com" },
+            { "name": "Thiruvananthapuram", "feedback_email": "feedback.tvpm@india.com", "complaint_email": "complaint.tvpm@india.com" },
+            { "name": "Kozhikode", "feedback_email": "feedback.kozhikode@india.com", "complaint_email": "complaint.kozhikode@india.com" },
+            { "name": "Thrissur", "feedback_email": "feedback.thrissur@india.com", "complaint_email": "complaint.thrissur@india.com" },
+            { "name": "Alappuzha", "feedback_email": "feedback.alappuzha@india.com", "complaint_email": "complaint.alappuzha@india.com" }
           ]
         },
         {
           "name": "Uttar Pradesh",
           "cities": [
-            {"name": "Lucknow", "email": "lucknow_feedback@example.com"},
-            {"name": "Kanpur", "email": "kanpur_feedback@example.com"},
-            {"name": "Varanasi", "email": "varanasi_feedback@example.com"},
-            {"name": "Agra", "email": "agra_feedback@example.com"},
-            {"name": "Allahabad", "email": "allahabad_feedback@example.com"},
-            {"name": "Meerut", "email": "meerut_feedback@example.com"},
-            {"name": "Gorakhpur", "email": "gorakhpur_feedback@example.com"},
-            {"name": "Mathura", "email": "mathura_feedback@example.com"},
-            {"name": "Firozabad", "email": "firozabad_feedback@example.com"},
-            {"name": "Aligarh", "email": "aligarh_feedback@example.com"}
+            { "name": "Lucknow", "feedback_email": "feedback.lucknow@india.com", "complaint_email": "complaint.lucknow@india.com" },
+            { "name": "Kanpur", "feedback_email": "feedback.kanpur@india.com", "complaint_email": "complaint.kanpur@india.com" },
+            { "name": "Varanasi", "feedback_email": "feedback.varanasi@india.com", "complaint_email": "complaint.varanasi@india.com" },
+            { "name": "Agra", "feedback_email": "feedback.agra@india.com", "complaint_email": "complaint.agra@india.com" },
+            { "name": "Noida", "feedback_email": "feedback.noida@india.com", "complaint_email": "complaint.noida@india.com" }
+          ]
+        },
+        {
+          "name": "Gujarat",
+          "cities": [
+            { "name": "Ahmedabad", "feedback_email": "feedback.ahmedabad@india.com", "complaint_email": "complaint.ahmedabad@india.com" },
+            { "name": "Surat", "feedback_email": "feedback.surat@india.com", "complaint_email": "complaint.surat@india.com" },
+            { "name": "Vadodara", "feedback_email": "feedback.vadodara@india.com", "complaint_email": "complaint.vadodara@india.com" },
+            { "name": "Rajkot", "feedback_email": "feedback.rajkot@india.com", "complaint_email": "complaint.rajkot@india.com" },
+            { "name": "Gandhinagar", "feedback_email": "feedback.gandhinagar@india.com", "complaint_email": "complaint.gandhinagar@india.com" }
+          ]
+        },
+        {
+          "name": "Rajasthan",
+          "cities": [
+            { "name": "Jaipur", "feedback_email": "feedback.jaipur@india.com", "complaint_email": "complaint.jaipur@india.com" },
+            { "name": "Udaipur", "feedback_email": "feedback.udaipur@india.com", "complaint_email": "complaint.udaipur@india.com" },
+            { "name": "Jodhpur", "feedback_email": "feedback.jodhpur@india.com", "complaint_email": "complaint.jodhpur@india.com" },
+            { "name": "Ajmer", "feedback_email": "feedback.ajmer@india.com", "complaint_email": "complaint.ajmer@india.com" },
+            { "name": "Bikaner", "feedback_email": "feedback.bikaner@india.com", "complaint_email": "complaint.bikaner@india.com" }
+          ]
+        },
+        {
+          "name": "West Bengal",
+          "cities": [
+            { "name": "Kolkata", "feedback_email": "feedback.kolkata@india.com", "complaint_email": "complaint.kolkata@india.com" },
+            { "name": "Darjeeling", "feedback_email": "feedback.darjeeling@india.com", "complaint_email": "complaint.darjeeling@india.com" },
+            { "name": "Howrah", "feedback_email": "feedback.howrah@india.com", "complaint_email": "complaint.howrah@india.com" },
+            { "name": "Siliguri", "feedback_email": "feedback.siliguri@india.com", "complaint_email": "complaint.siliguri@india.com" },
+            { "name": "Durgapur", "feedback_email": "feedback.durgapur@india.com", "complaint_email": "complaint.durgapur@india.com" }
+          ]
+        },
+        {
+          "name": "Punjab",
+          "cities": [
+            { "name": "Amritsar", "feedback_email": "feedback.amritsar@india.com", "complaint_email": "complaint.amritsar@india.com" },
+            { "name": "Ludhiana", "feedback_email": "feedback.ludhiana@india.com", "complaint_email": "complaint.ludhiana@india.com" },
+            { "name": "Jalandhar", "feedback_email": "feedback.jalandhar@india.com", "complaint_email": "complaint.jalandhar@india.com" },
+            { "name": "Patiala", "feedback_email": "feedback.patiala@india.com", "complaint_email": "complaint.patiala@india.com" },
+            { "name": "Mohali", "feedback_email": "feedback.mohali@india.com", "complaint_email": "complaint.mohali@india.com" }
+          ]
+        },
+        {
+          "name": "Delhi",
+          "cities": [
+            { "name": "New Delhi", "feedback_email": "feedback.newdelhi@india.com", "complaint_email": "complaint.newdelhi@india.com" },
+            { "name": "South Delhi", "feedback_email": "feedback.southdelhi@india.com", "complaint_email": "complaint.southdelhi@india.com" },
+            { "name": "North Delhi", "feedback_email": "feedback.northdelhi@india.com", "complaint_email": "complaint.northdelhi@india.com" },
+            { "name": "West Delhi", "feedback_email": "feedback.westdelhi@india.com", "complaint_email": "complaint.westdelhi@india.com" },
+            { "name": "East Delhi", "feedback_email": "feedback.eastdelhi@india.com", "complaint_email": "complaint.eastdelhi@india.com" }
           ]
         }
       ]
     },
-    {
-      "name": "USA",
-      "states": [
         {
-          "name": "California",
-          "cities": [
-            {"name": "San Francisco", "email": "sf_feedback@example.com"},
-            {"name": "Los Angeles", "email": "la_feedback@example.com"},
-            {"name": "San Diego", "email": "sd_feedback@example.com"},
-            {"name": "Sacramento", "email": "sacramento_feedback@example.com"},
-            {"name": "Fresno", "email": "fresno_feedback@example.com"},
-            {"name": "Long Beach", "email": "longbeach_feedback@example.com"},
-            {"name": "Oakland", "email": "oakland_feedback@example.com"},
-            {"name": "Anaheim", "email": "anaheim_feedback@example.com"},
-            {"name": "Santa Clara", "email": "santaclara_feedback@example.com"},
-            {"name": "Irvine", "email": "irvine_feedback@example.com"}
+          "name": "United States",
+          "states": [
+            {
+              "name": "California",
+              "cities": [
+                { "name": "Los Angeles", "feedback_email": "feedback.la@usa.com", "complaint_email": "complaint.la@usa.com" },
+                { "name": "San Francisco", "feedback_email": "feedback.sf@usa.com", "complaint_email": "complaint.sf@usa.com" },
+                { "name": "San Diego", "feedback_email": "feedback.sandiego@usa.com", "complaint_email": "complaint.sandiego@usa.com" }
+              ]
+            },
+            {
+              "name": "Texas",
+              "cities": [
+                { "name": "Houston", "feedback_email": "feedback.houston@usa.com", "complaint_email": "complaint.houston@usa.com" },
+                { "name": "Dallas", "feedback_email": "feedback.dallas@usa.com", "complaint_email": "complaint.dallas@usa.com" },
+                { "name": "Austin", "feedback_email": "feedback.austin@usa.com", "complaint_email": "complaint.austin@usa.com" }
+              ]
+            }
           ]
         },
         {
-          "name": "Texas",
-          "cities": [
-            {"name": "Houston", "email": "houston_feedback@example.com"},
-            {"name": "Dallas", "email": "dallas_feedback@example.com"},
-            {"name": "Austin", "email": "austin_feedback@example.com"},
-            {"name": "San Antonio", "email": "sanantonio_feedback@example.com"},
-            {"name": "Fort Worth", "email": "fortworth_feedback@example.com"},
-            {"name": "El Paso", "email": "elpaso_feedback@example.com"},
-            {"name": "Arlington", "email": "arlington_feedback@example.com"},
-            {"name": "Corpus Christi", "email": "corpuschristi_feedback@example.com"},
-            {"name": "Plano", "email": "plano_feedback@example.com"},
-            {"name": "Lubbock", "email": "lubbock_feedback@example.com"}
+          "name": "Canada",
+          "states": [
+            {
+              "name": "Ontario",
+              "cities": [
+                { "name": "Toronto", "feedback_email": "feedback.toronto@canada.com", "complaint_email": "complaint.toronto@canada.com" },
+                { "name": "Ottawa", "feedback_email": "feedback.ottawa@canada.com", "complaint_email": "complaint.ottawa@canada.com" },
+                { "name": "Mississauga", "feedback_email": "feedback.mississauga@canada.com", "complaint_email": "complaint.mississauga@canada.com" }
+              ]
+            },
+            {
+              "name": "British Columbia",
+              "cities": [
+                { "name": "Vancouver", "feedback_email": "feedback.vancouver@canada.com", "complaint_email": "complaint.vancouver@canada.com" },
+                { "name": "Victoria", "feedback_email": "feedback.victoria@canada.com", "complaint_email": "complaint.victoria@canada.com" },
+                { "name": "Surrey", "feedback_email": "feedback.surrey@canada.com", "complaint_email": "complaint.surrey@canada.com" }
+              ]
+            }
           ]
         },
         {
-          "name": "Florida",
-          "cities": [
-            {"name": "Miami", "email": "miami_feedback@example.com"},
-            {"name": "Orlando", "email": "orlando_feedback@example.com"},
-            {"name": "Tampa", "email": "tampa_feedback@example.com"},
-            {"name": "Jacksonville", "email": "jacksonville_feedback@example.com"},
-            {"name": "St. Petersburg", "email": "stpetersburg_feedback@example.com"},
-            {"name": "Hialeah", "email": "hialeah_feedback@example.com"},
-            {"name": "Tallahassee", "email": "tallahassee_feedback@example.com"},
-            {"name": "Fort Lauderdale", "email": "fortlauderdale_feedback@example.com"},
-            {"name": "Pembroke Pines", "email": "pembrokepines_feedback@example.com"},
-            {"name": "Cape Coral", "email": "capecoral_feedback@example.com"}
+          "name": "Australia",
+          "states": [
+            {
+              "name": "New South Wales",
+              "cities": [
+                { "name": "Sydney", "feedback_email": "feedback.sydney@australia.com", "complaint_email": "complaint.sydney@australia.com" },
+                { "name": "Newcastle", "feedback_email": "feedback.newcastle@australia.com", "complaint_email": "complaint.newcastle@australia.com" },
+                { "name": "Wollongong", "feedback_email": "feedback.wollongong@australia.com", "complaint_email": "complaint.wollongong@australia.com" }
+              ]
+            },
+            {
+              "name": "Victoria",
+              "cities": [
+                { "name": "Melbourne", "feedback_email": "feedback.melbourne@australia.com", "complaint_email": "complaint.melbourne@australia.com" },
+                { "name": "Geelong", "feedback_email": "feedback.geelong@australia.com", "complaint_email": "complaint.geelong@australia.com" },
+                { "name": "Ballarat", "feedback_email": "feedback.ballarat@australia.com", "complaint_email": "complaint.ballarat@australia.com" }
+              ]
+            }
           ]
         },
         {
-          "name": "New York",
-          "cities": [
-            {"name": "New York City", "email": "nyc_feedback@example.com"},
-            {"name": "Buffalo", "email": "buffalo_feedback@example.com"},
-            {"name": "Rochester", "email": "rochester_feedback@example.com"},
-            {"name": "Yonkers", "email": "yonkers_feedback@example.com"},
-            {"name": "Syracuse", "email": "syracuse_feedback@example.com"},
-            {"name": "Albany", "email": "albany_feedback@example.com"},
-            {"name": "New Rochelle", "email": "newrochelle_feedback@example.com"},
-            {"name": "Mount Vernon", "email": "mountvernon_feedback@example.com"},
-            {"name": "Schenectady", "email": "schenectady_feedback@example.com"},
-            {"name": "Troy", "email": "troy_feedback@example.com"}
+          "name": "Germany",
+          "states": [
+            {
+              "name": "Bavaria",
+              "cities": [
+                { "name": "Munich", "feedback_email": "feedback.munich@germany.com", "complaint_email": "complaint.munich@germany.com" },
+                { "name": "Nuremberg", "feedback_email": "feedback.nuremberg@germany.com", "complaint_email": "complaint.nuremberg@germany.com" },
+                { "name": "Augsburg", "feedback_email": "feedback.augsburg@germany.com", "complaint_email": "complaint.augsburg@germany.com" }
+              ]
+            },
+            {
+              "name": "North Rhine-Westphalia",
+              "cities": [
+                { "name": "Cologne", "feedback_email": "feedback.cologne@germany.com", "complaint_email": "complaint.cologne@germany.com" },
+                { "name": "Düsseldorf", "feedback_email": "feedback.dusseldorf@germany.com", "complaint_email": "complaint.dusseldorf@germany.com" },
+                { "name": "Dortmund", "feedback_email": "feedback.dortmund@germany.com", "complaint_email": "complaint.dortmund@germany.com" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Japan",
+          "states": [
+            {
+              "name": "Kanto",
+              "cities": [
+                { "name": "Tokyo", "feedback_email": "feedback.tokyo@japan.com", "complaint_email": "complaint.tokyo@japan.com" },
+                { "name": "Yokohama", "feedback_email": "feedback.yokohama@japan.com", "complaint_email": "complaint.yokohama@japan.com" },
+                { "name": "Kawasaki", "feedback_email": "feedback.kawasaki@japan.com", "complaint_email": "complaint.kawasaki@japan.com" }
+              ]
+            },
+            {
+              "name": "Kansai",
+              "cities": [
+                { "name": "Osaka", "feedback_email": "feedback.osaka@japan.com", "complaint_email": "complaint.osaka@japan.com" },
+                { "name": "Kyoto", "feedback_email": "feedback.kyoto@japan.com", "complaint_email": "complaint.kyoto@japan.com" },
+                { "name": "Kobe", "feedback_email": "feedback.kobe@japan.com", "complaint_email": "complaint.kobe@japan.com" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "France",
+          "states": [
+            {
+              "name": "Île-de-France",
+              "cities": [
+                { "name": "Paris", "feedback_email": "feedback.paris@france.com", "complaint_email": "complaint.paris@france.com" },
+                { "name": "Versailles", "feedback_email": "feedback.versailles@france.com", "complaint_email": "complaint.versailles@france.com" },
+                { "name": "Boulogne-Billancourt", "feedback_email": "feedback.boulogne@france.com", "complaint_email": "complaint.boulogne@france.com" }
+              ]
+            },
+            {
+              "name": "Provence-Alpes-Côte d'Azur",
+              "cities": [
+                { "name": "Marseille", "feedback_email": "feedback.marseille@france.com", "complaint_email": "complaint.marseille@france.com" },
+                { "name": "Nice", "feedback_email": "feedback.nice@france.com", "complaint_email": "complaint.nice@france.com" },
+                { "name": "Toulon", "feedback_email": "feedback.toulon@france.com", "complaint_email": "complaint.toulon@france.com" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Brazil",
+          "states": [
+            {
+              "name": "São Paulo",
+              "cities": [
+                { "name": "São Paulo", "feedback_email": "feedback.saopaulo@brazil.com", "complaint_email": "complaint.saopaulo@brazil.com" },
+                { "name": "Campinas", "feedback_email": "feedback.campinas@brazil.com", "complaint_email": "complaint.campinas@brazil.com" },
+                { "name": "Santos", "feedback_email": "feedback.santos@brazil.com", "complaint_email": "complaint.santos@brazil.com" }
+              ]
+            },
+            {
+              "name": "Rio de Janeiro",
+              "cities": [
+                { "name": "Rio de Janeiro", "feedback_email": "feedback.rio@brazil.com", "complaint_email": "complaint.rio@brazil.com" },
+                { "name": "Niterói", "feedback_email": "feedback.niteroi@brazil.com", "complaint_email": "complaint.niteroi@brazil.com" },
+                { "name": "Petropolis", "feedback_email": "feedback.petropolis@brazil.com", "complaint_email": "complaint.petropolis@brazil.com" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "United Kingdom",
+          "states": [
+            {
+              "name": "England",
+              "cities": [
+                { "name": "London", "feedback_email": "feedback.london@uk.com", "complaint_email": "complaint.london@uk.com" },
+                { "name": "Manchester", "feedback_email": "feedback.manchester@uk.com", "complaint_email": "complaint.manchester@uk.com" },
+                { "name": "Birmingham", "feedback_email": "feedback.birmingham@uk.com", "complaint_email": "complaint.birmingham@uk.com" }
+              ]
+            },
+            {
+              "name": "Scotland",
+              "cities": [
+                { "name": "Edinburgh", "feedback_email": "feedback.edinburgh@uk.com", "complaint_email": "complaint.edinburgh@uk.com" },
+                { "name": "Glasgow", "feedback_email": "feedback.glasgow@uk.com", "complaint_email": "complaint.glasgow@uk.com" },
+                { "name": "Aberdeen", "feedback_email": "feedback.aberdeen@uk.com", "complaint_email": "complaint.aberdeen@uk.com" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "South Africa",
+          "states": [
+            {
+              "name": "Gauteng",
+              "cities": [
+                { "name": "Johannesburg", "feedback_email": "feedback.johannesburg@safrica.com", "complaint_email": "complaint.johannesburg@safrica.com" },
+                { "name": "Pretoria", "feedback_email": "feedback.pretoria@safrica.com", "complaint_email": "complaint.pretoria@safrica.com" },
+                { "name": "Benoni", "feedback_email": "feedback.benoni@safrica.com", "complaint_email": "complaint.benoni@safrica.com" }
+              ]
+            },
+            {
+              "name": "Western Cape",
+              "cities": [
+                { "name": "Cape Town", "feedback_email": "feedback.capetown@safrica.com", "complaint_email": "complaint.capetown@safrica.com" },
+                { "name": "Stellenbosch", "feedback_email": "feedback.stellenbosch@safrica.com", "complaint_email": "complaint.stellenbosch@safrica.com" },
+                { "name": "George", "feedback_email": "feedback.george@safrica.com", "complaint_email": "complaint.george@safrica.com" }
+              ]
+            }
           ]
         }
       ]
     }
-  ]
-}
+    
+
+

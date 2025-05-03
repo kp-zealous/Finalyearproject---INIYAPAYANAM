@@ -1,0 +1,134 @@
+{
+    "countries": [
+      {
+        "name": "India",
+        "states": [
+          {
+            "name": "Tamil Nadu",
+            "cities": [
+              {"name": "Chennai", "feedback_email": "chennai_feedback@example.com", "complaint_email": "chennai_complaint@example.com"},
+              {"name": "Coimbatore", "feedback_email": "coimbatore_feedback@example.com", "complaint_email": "coimbatore_complaint@example.com"},
+              {"name": "Madurai", "feedback_email": "madurai_feedback@example.com", "complaint_email": "madurai_complaint@example.com"},
+              {"name": "Salem", "feedback_email": "salem_feedback@example.com", "complaint_email": "salem_complaint@example.com"},
+              {"name": "Tiruchirappalli", "feedback_email": "tiruchirappalli_feedback@example.com", "complaint_email": "tiruchirappalli_complaint@example.com"},
+              {"name": "Erode", "feedback_email": "erode_feedback@example.com", "complaint_email": "erode_complaint@example.com"},
+              {"name": "Vellore", "feedback_email": "vellore_feedback@example.com", "complaint_email": "vellore_complaint@example.com"},
+              {"name": "Dindigul", "feedback_email": "dindigul_feedback@example.com", "complaint_email": "dindigul_complaint@example.com"},
+              {"name": "Chidambaram", "feedback_email": "chidambaram_feedback@example.com", "complaint_email": "chidambaram_complaint@example.com"},
+              {"name": "Thanjavur", "feedback_email": "thanjavur_feedback@example.com", "complaint_email": "thanjavur_complaint@example.com"}
+            ]
+          },
+          {
+            "name": "Maharashtra",
+            "cities": [
+              {"name": "Mumbai", "feedback_email": "mumbai_feedback@example.com", "complaint_email": "mumbai_complaint@example.com"},
+              {"name": "Pune", "feedback_email": "pune_feedback@example.com", "complaint_email": "pune_complaint@example.com"},
+              {"name": "Nagpur", "feedback_email": "nagpur_feedback@example.com", "complaint_email": "nagpur_complaint@example.com"},
+              {"name": "Nashik", "feedback_email": "nashik_feedback@example.com", "complaint_email": "nashik_complaint@example.com"},
+              {"name": "Aurangabad", "feedback_email": "aurangabad_feedback@example.com", "complaint_email": "aurangabad_complaint@example.com"},
+              {"name": "Thane", "feedback_email": "thane_feedback@example.com", "complaint_email": "thane_complaint@example.com"},
+              {"name": "Solapur", "feedback_email": "solapur_feedback@example.com", "complaint_email": "solapur_complaint@example.com"},
+              {"name": "Kolhapur", "feedback_email": "kolhapur_feedback@example.com", "complaint_email": "kolhapur_complaint@example.com"},
+              {"name": "Jalgaon", "feedback_email": "jalgaon_feedback@example.com", "complaint_email": "jalgaon_complaint@example.com"},
+              {"name": "Latur", "feedback_email": "latur_feedback@example.com", "complaint_email": "latur_complaint@example.com"}
+            ]
+          },
+          {
+            "name": "Karnataka",
+            "cities": [
+              {"name": "Bengaluru", "feedback_email": "bengaluru_feedback@example.com", "complaint_email": "bengaluru_complaint@example.com"},
+              {"name": "Mysuru", "feedback_email": "mysuru_feedback@example.com", "complaint_email": "mysuru_complaint@example.com"},
+              {"name": "Hubballi", "feedback_email": "hubballi_feedback@example.com", "complaint_email": "hubballi_complaint@example.com"},
+              {"name": "Mangalore", "feedback_email": "mangalore_feedback@example.com", "complaint_email": "mangalore_complaint@example.com"},
+              {"name": "Belagavi", "feedback_email": "belagavi_feedback@example.com", "complaint_email": "belagavi_complaint@example.com"},
+              {"name": "Shivamogga", "feedback_email": "shivamogga_feedback@example.com", "complaint_email": "shivamogga_complaint@example.com"},
+              {"name": "Tumkur", "feedback_email": "tumkur_feedback@example.com", "complaint_email": "tumkur_complaint@example.com"},
+              {"name": "Davangere", "feedback_email": "davangere_feedback@example.com", "complaint_email": "davangere_complaint@example.com"},
+              {"name": "Chitradurga", "feedback_email": "chitradurga_feedback@example.com", "complaint_email": "chitradurga_complaint@example.com"},
+              {"name": "Raichur", "feedback_email": "raichur_feedback@example.com", "complaint_email": "raichur_complaint@example.com"}
+            ]
+          },
+          {
+            "name": "Andhra Pradesh",
+            "cities": [
+              {"name": "Visakhapatnam", "feedback_email": "visakhapatnam_feedback@example.com", "complaint_email": "visakhapatnam_complaint@example.com"},
+              {"name": "Vijayawada", "feedback_email": "vijayawada_feedback@example.com", "complaint_email": "vijayawada_complaint@example.com"},
+              {"name": "Guntur", "feedback_email": "guntur_feedback@example.com", "complaint_email": "guntur_complaint@example.com"},
+              {"name": "Kurnool", "feedback_email": "kurnool_feedback@example.com", "complaint_email": "kurnool_complaint@example.com"},
+              {"name": "Rajahmundry", "feedback_email": "rajahmundry_feedback@example.com", "complaint_email": "rajahmundry_complaint@example.com"},
+              {"name": "Nellore", "feedback_email": "nellore_feedback@example.com", "complaint_email": "nellore_complaint@example.com"},
+              {"name": "Tirupati", "feedback_email": "tirupati_feedback@example.com", "complaint_email": "tirupati_complaint@example.com"},
+              {"name": "Chittoor", "feedback_email": "chittoor_feedback@example.com", "complaint_email": "chittoor_complaint@example.com"},
+              {"name": "Kadapa", "feedback_email": "kadapa_feedback@example.com", "complaint_email": "kadapa_complaint@example.com"},
+              {"name": "Anantapur", "feedback_email": "anantapur_feedback@example.com", "complaint_email": "anantapur_complaint@example.com"}
+            ]
+          },
+          {
+            "name": "Uttar Pradesh",
+            "cities": [
+              {"name": "Lucknow", "feedback_email": "lucknow_feedback@example.com", "complaint_email": "lucknow_complaint@example.com"},
+              {"name": "Kanpur", "feedback_email": "kanpur_feedback@example.com", "complaint_email": "kanpur_complaint@example.com"},
+              {"name": "Varanasi", "feedback_email": "varanasi_feedback@example.com", "complaint_email": "varanasi_complaint@example.com"},
+              {"name": "Agra", "feedback_email": "agra_feedback@example.com", "complaint_email": "agra_complaint@example.com"},
+              {"name": "Allahabad", "feedback_email": "allahabad_feedback@example.com", "complaint_email": "allahabad_complaint@example.com"},
+              {"name": "Meerut", "feedback_email": "meerut_feedback@example.com", "complaint_email": "meerut_complaint@example.com"},
+              {"name": "Gorakhpur", "feedback_email": "gorakhpur_feedback@example.com", "complaint_email": "gorakhpur_complaint@example.com"},
+              {"name": "Mathura", "feedback_email": "mathura_feedback@example.com", "complaint_email": "mathura_complaint@example.com"},
+              {"name": "Firozabad", "feedback_email": "firozabad_feedback@example.com", "complaint_email": "firozabad_complaint@example.com"},
+              {"name": "Aligarh", "feedback_email": "aligarh_feedback@example.com", "complaint_email": "aligarh_complaint@example.com"}
+            ]
+          }
+        ]
+      },
+      {
+        "name": "USA",
+        "states": [
+          {
+            "name": "California",
+            "cities": [
+              {"name": "San Francisco", "feedback_email": "sf_feedback@example.com", "complaint_email": "sf_complaint@example.com"},
+              {"name": "Los Angeles", "feedback_email": "la_feedback@example.com", "complaint_email": "la_complaint@example.com"},
+              {"name": "San Diego", "feedback_email": "sd_feedback@example.com", "complaint_email": "sd_complaint@example.com"},
+              {"name": "Sacramento", "feedback_email": "sacramento_feedback@example.com", "complaint_email": "sacramento_complaint@example.com"},
+              {"name": "Fresno", "feedback_email": "fresno_feedback@example.com", "complaint_email": "fresno_complaint@example.com"},
+              {"name": "Long Beach", "feedback_email": "longbeach_feedback@example.com", "complaint_email": "longbeach_complaint@example.com"},
+              {"name": "Oakland", "feedback_email": "oakland_feedback@example.com", "complaint_email": "oakland_complaint@example.com"},
+              {"name": "Anaheim", "feedback_email": "anaheim_feedback@example.com", "complaint_email": "anaheim_complaint@example.com"},
+              {"name": "Santa Clara", "feedback_email": "santaclara_feedback@example.com", "complaint_email": "santaclara_complaint@example.com"},
+              {"name": "Irvine", "feedback_email": "irvine_feedback@example.com", "complaint_email": "irvine_complaint@example.com"}
+            ]
+          },
+          {
+            "name": "Texas",
+            "cities": [
+              {"name": "Houston", "feedback_email": "houston_feedback@example.com", "complaint_email": "houston_complaint@example.com"},
+              {"name": "Dallas", "feedback_email": "dallas_feedback@example.com", "complaint_email": "dallas_complaint@example.com"},
+              {"name": "Austin", "feedback_email": "austin_feedback@example.com", "complaint_email": "austin_complaint@example.com"},
+              {"name": "San Antonio", "feedback_email": "sanantonio_feedback@example.com", "complaint_email": "sanantonio_complaint@example.com"},
+              {"name": "Fort Worth", "feedback_email": "fortworth_feedback@example.com", "complaint_email": "fortworth_complaint@example.com"},
+              {"name": "El Paso", "feedback_email": "elpaso_feedback@example.com", "complaint_email": "elpaso_complaint@example.com"},
+              {"name": "Arlington", "feedback_email": "arlington_feedback@example.com", "complaint_email": "arlington_complaint@example.com"},
+              {"name": "Corpus Christi", "feedback_email": "corpuschristi_feedback@example.com", "complaint_email": "corpuschristi_complaint@example.com"},
+              {"name": "Plano", "feedback_email": "plano_feedback@example.com", "complaint_email": "plano_complaint@example.com"},
+              {"name": "Lubbock", "feedback_email": "lubbock_feedback@example.com", "complaint_email": "lubbock_complaint@example.com"}
+            ]
+          },
+          {
+            "name": "Florida",
+            "cities": [
+              {"name": "Miami", "feedback_email": "miami_feedback@example.com", "complaint_email": "miami_complaint@example.com"},
+              {"name": "Orlando", "feedback_email": "orlando_feedback@example.com", "complaint_email": "orlando_complaint@example.com"},
+              {"name": "Tampa", "feedback_email": "tampa_feedback@example.com", "complaint_email": "tampa_complaint@example.com"},
+              {"name": "Jacksonville", "feedback_email": "jacksonville_feedback@example.com", "complaint_email": "jacksonville_complaint@example.com"},
+              {"name": "St. Petersburg", "feedback_email": "stpetersburg_feedback@example.com", "complaint_email": "stpetersburg_complaint@example.com"},
+              {"name": "Hialeah", "feedback_email": "hialeah_feedback@example.com", "complaint_email": "hialeah_complaint@example.com"},
+              {"name": "Tallahassee", "feedback_email": "tallahassee_feedback@example.com", "complaint_email": "tallahassee_complaint@example.com"},
+              {"name": "Port St. Lucie", "feedback_email": "portstlucie_feedback@example.com", "complaint_email": "portstlucie_complaint@example.com"},
+              {"name": "Cape Coral", "feedback_email": "capecoral_feedback@example.com", "complaint_email": "capecoral_complaint@example.com"},
+              {"name": "Fort Lauderdale", "feedback_email": "fortlauderdale_feedback@example.com", "complaint_email": "fortlauderdale_complaint@example.com"}
+            ]
+          }
+        ]
+      }
+    ]
+  }

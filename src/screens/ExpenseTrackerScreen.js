@@ -15,6 +15,8 @@ import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as Print from 'expo-print';
 import { ScrollView } from 'react-native';
+import Navbar from '../components/Navbar';
+import Header from '../components/Header';
 
 
 
@@ -221,7 +223,8 @@ export default function ExpenseTrackerScreen({ navigation, route }) {
         </style>
       </head>
       <body>
-        <div class="heading">Expense Tracker - Trip Summary</div>
+        <div class="heading">Expense Tracker: ${SelectedTripId.tripName || tripData.destination}</div>
+  
         <div class="subheading">Managed by IniyaPayanam 💼</div>
     
         <div class="summary-block">
@@ -272,6 +275,8 @@ export default function ExpenseTrackerScreen({ navigation, route }) {
 
 
   return (
+    <>
+    <Header/>
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
               
@@ -282,27 +287,46 @@ export default function ExpenseTrackerScreen({ navigation, route }) {
         <Text style={styles.title}>💰 Expense Tracker</Text>
 
         <Text style={styles.sectionTitle}>Select a Trip</Text>
-        <View style={{ flexDirection: 'row', marginBottom: 15 }}>
-  {trips.length > 0 ? (
-    trips.map((item) => (
-      <TouchableOpacity
-        key={item.id}
-        style={[
-          styles.tripCard,
-          item.id === selectedTripId && styles.tripCardSelected,
-        ]}
-        onPress={() => setSelectedTripId(item.id)}
-      >
-        <Text style={styles.tripName}>{item.tripName}</Text>
-        <Text style={styles.date}>
-        {formatDate(item.startDate)} → {formatDate(item.endDate)}
-        </Text>
-      </TouchableOpacity>
-    ))
-  ) : (
-    <Text>No trips found.</Text>
-  )}
-</View>
+        <ScrollView
+  horizontal
+  style={{ marginBottom: 15 }}
+  showsHorizontalScrollIndicator={false}
+>
+  <View style={{ flexDirection: 'row', marginBottom: 15 }}>
+    {trips.length > 0 ? (
+      trips.map((item) => (
+        <TouchableOpacity
+  key={item.id}
+  style={[
+    styles.tripCard,
+    item.id === selectedTripId && styles.tripCardSelected,
+  ]}
+  onPress={() => setSelectedTripId(item.id)}
+>
+  <Text
+    style={[
+      styles.tripName,
+      item.id === selectedTripId && styles.tripTextSelected,
+    ]}
+  >
+    {item.tripName}
+  </Text>
+  <Text
+    style={[
+      styles.date,
+      item.id === selectedTripId && styles.tripTextSelected,
+    ]}
+  >
+    {formatDate(item.startDate)} → {formatDate(item.endDate)}
+  </Text>
+</TouchableOpacity>
+      ))
+    ) : (
+      <Text>No trips found.</Text>
+    )}
+  </View>
+</ScrollView>
+
         {selectedTripId && (
           <>
             <View style={styles.inputContainer}>
@@ -361,6 +385,8 @@ export default function ExpenseTrackerScreen({ navigation, route }) {
 
 
     </View>
+    <Navbar/>
+    </>
   );
 }
 
@@ -368,10 +394,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop:70,
     backgroundColor: '#f9fafb',
   },
   scrollViewContent: {
-    paddingBottom: 80, 
+    paddingBottom: 130, 
   },
 
   title: {
@@ -388,24 +415,30 @@ const styles = StyleSheet.create({
     color: '#334155',
   },
   tripCard: {
-    padding: 14,
+    padding: 10,
+    marginRight: 15,
     borderRadius: 10,
-    backgroundColor: '#e2e8f0',
-    marginRight: 12,
-    minWidth: 120,
+    backgroundColor: '#E0F0FF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   tripCardSelected: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#007BFF',
   },
   tripName: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
-    marginBottom: 4,
+    fontWeight: 'bold',
+    color: '#003366',
   },
   date: {
-    fontSize: 14,
-    color: '#f1f5f9',
+    fontSize: 12,
+    color: '#1C3F60',
+  },
+  tripTextSelected: {
+    color: '#FFFFFF',
   },
   inputContainer: {
     marginBottom: 24,

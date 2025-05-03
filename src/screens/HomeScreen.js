@@ -4,13 +4,11 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
-  ActivityIndicator,
   ScrollView,
   Dimensions,
 } from 'react-native';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth, db } from '../config/firebase'; // Firebase setup
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../config/firebase';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Navbar from '../components/Navbar';
 import Header from '../components/Header';
@@ -21,13 +19,14 @@ export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [trips, setTrips] = useState([]);
 
-  // Fetch current user authentication status
   useEffect(() => {
+    console.log('[Auth] Checking authentication status...');
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
+        console.log('[Auth] User is logged in:', currentUser.uid);
         setUser(currentUser);
-        fetchTrips(); // Fetch trips data from Firestore after user is authenticated
       } else {
+        console.log('[Auth] No user detected. Redirecting to login...');
         navigation.replace('Login');
       }
       setLoading(false);
@@ -36,42 +35,8 @@ export default function HomeScreen({ navigation }) {
     return unsubscribe;
   }, []);
 
- const fetchTrips = async () => {
-  try {
-    const tripsRef = collection(db, 'trip_plans'); // Reference to Firestore collection
-    const tripSnapshot = await getDocs(tripsRef);
-    const tripList = tripSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
 
-    // Filter trips to only include the current user's trips
-    const userTrips = tripList.filter(trip => trip.userId === user.uid);
 
-    setTrips(userTrips); // Set filtered trips to the state
-  } catch (error) {
-    console.error('Error fetching trips:', error);
-  }
-};
-
-  
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigation.replace('Login');
-    } catch (error) {
-      console.error('Logout error:', error.message);
-    }
-  };
-
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
-      </View>
-    );
-  }
 
   return (
     <>
@@ -82,7 +47,6 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.welcome}>Hi, {user ? user.displayName || user.email : 'Guest'}</Text>
             <Text style={styles.subtitle}>Where are you traveling today?</Text>
           </View>
-         
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -108,25 +72,7 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {/* Horizontal scroll view for trip tiles */}
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.tripRow}>
-              {trips.map((trip) => (
-                <TouchableOpacity
-                  key={trip.id}
-                  style={styles.tripTile}
-                  onPress={() => navigation.navigate('TripPlan', { tripId: trip.id })}
-                >
-                  <Text style={styles.tripTileText}>{trip.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </ScrollView>
 
-          {/* Logout button */}
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Text style={styles.logoutText}>Logout</Text>
-          </TouchableOpacity>
         </ScrollView>
       </View>
       <Navbar />
@@ -145,11 +91,6 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     marginTop: 40,
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -165,13 +106,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
     marginTop: 4,
-  },
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    borderWidth: 2,
-    borderColor: '#007AFF',
   },
   scrollContent: {
     paddingBottom: 30,
@@ -218,16 +152,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#007AFF',
-  },
-  logoutButton: {
-    backgroundColor: '#607D8B',
-    marginTop: 20,
-    padding: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  logoutText: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
 });

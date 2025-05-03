@@ -19,10 +19,12 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import CompanyProfileScreen from './src/screens/companyprofilescreen'; 
 import FeedbackScreen from './src/screens/Complaint';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>

@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Navbar from '../components/Navbar';
+import Header from '../components/Header';
 
 export default function CompanyProfileScreen({ navigation }) {
-  return (
+  return (<>
+  <Header/>
     <ScrollView contentContainerStyle={styles.container}>
       {/* Header */}
       <View style={styles.header}>
@@ -12,7 +15,7 @@ export default function CompanyProfileScreen({ navigation }) {
         </TouchableOpacity>
         <View style={styles.headerContent}>
           <Image
-            source={require('../../assets/img/Logo.png') } // Replace with your logo
+            source={require('../../assets/img/Logo.png')} // Replace with your logo
             style={styles.logo}
           />
           <Text style={styles.companyName}>IniyaPayanam</Text>
@@ -27,7 +30,7 @@ export default function CompanyProfileScreen({ navigation }) {
         </Text>
       </View>
 
-      {/* Company Description */}
+      {/* Company Mission */}
       <View style={styles.section}>
         <Text style={styles.title}>Our Mission</Text>
         <Text style={styles.text}>
@@ -37,32 +40,32 @@ export default function CompanyProfileScreen({ navigation }) {
 
       {/* Developer Details */}
       <View style={styles.section}>
-        <Text style={styles.title}>Meet the Team</Text>
+        <Text style={styles.title}>Meet the Founders</Text>
 
         <View style={styles.profileCard}>
           <Image
-            source={{ uri: 'https://example.com/developer.jpg' }} // Replace with developer photo
+            source={{ uri: 'https://example.com/krithika.jpg' }} // Replace with Krithika's photo
             style={styles.profileImage}
           />
           <View style={styles.profileText}>
-            <Text style={styles.name}>Krithika R</Text>
-            <Text style={styles.role}>Lead Developer</Text>
+            <Text style={styles.name}>Krithika Priya P.R.</Text>
+            <Text style={styles.role}>Co-Founder & Developer</Text>
             <Text style={styles.text}>
-              Krithika is a passionate full-stack developer and AI enthusiast. With a strong background in mobile app development and design thinking, she leads the creation of intuitive, user-friendly travel features.
+              Krithika is a full-stack developer, creative thinker, and AI enthusiast. She leads the app’s design and logic, ensuring a seamless and intuitive travel experience for users worldwide.
             </Text>
           </View>
         </View>
 
         <View style={styles.profileCard}>
           <Image
-            source={{ uri: 'https://example.com/owner.jpg' }} // Replace with owner photo
+            source={{ uri: 'https://example.com/sandhya.jpg' }} // Replace with Sandhya's photo
             style={styles.profileImage}
           />
           <View style={styles.profileText}>
-            <Text style={styles.name}>S. Aravind</Text>
-            <Text style={styles.role}>Founder & Visionary</Text>
+            <Text style={styles.name}>Sandhya A</Text>
+            <Text style={styles.role}>Co-Founder & Developer</Text>
             <Text style={styles.text}>
-              Aravind brings the vision of smarter, safer travel to life. With a background in entrepreneurship and cultural research, he ensures the app stays rooted in traveler needs and values.
+              Sandhya specializes in backend systems, data architecture, and integration. Her dedication to building secure, scalable features helps bring the app’s powerful tools to life.
             </Text>
           </View>
         </View>
@@ -76,6 +79,8 @@ export default function CompanyProfileScreen({ navigation }) {
         <Text style={styles.text}>Website: www.iniyapayanam.com</Text>
       </View>
     </ScrollView>
+    <Navbar/>
+    </>
   );
 }
 
@@ -83,6 +88,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: '#fff',
+    marginTop:80,
+    paddingBottom:180,
   },
   header: {
     flexDirection: 'row',
