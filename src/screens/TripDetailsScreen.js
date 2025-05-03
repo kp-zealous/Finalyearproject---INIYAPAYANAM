@@ -133,9 +133,7 @@ export default function TripDetailsScreen({ route }) {
 
         <View style={styles.section}>
           <Text style={styles.label}>Places to Visit:</Text>
-          <Text style={[styles.value, { whiteSpace: 'pre-line' }]}>
-            {renderPlaces()}
-          </Text>
+          <Text style={[styles.value, { whiteSpace: 'pre-line' }]}>{renderPlaces()}</Text>
         </View>
 
         <View style={styles.section}>
@@ -150,10 +148,10 @@ export default function TripDetailsScreen({ route }) {
         >
           <Text style={styles.mapButtonText}>🗺️ View Trip Map</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Expense', { tripId, userId })} style={styles.mapButton}
-        >
-          <Text style={styles.mapButtonText}>🗺️ View Trip Expense</Text>
-          </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Expense', { tripId, userId })} style={styles.mapButton}>
+          <Text style={styles.mapButtonText}>💰 View Trip Expense</Text>
+        </TouchableOpacity>
 
         {/* Buttons Section: Edit and Delete */}
         <View style={styles.buttonContainer}>
@@ -172,20 +170,20 @@ export default function TripDetailsScreen({ route }) {
       {/* Navbar */}
       <View style={styles.navbar}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home" size={24} color="#007AFF" />
+          <Ionicons name="home" size={24} color="#00A1D6" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Expense')}>
-          <Ionicons name="wallet" size={24} color="#007AFF" />
+          <Ionicons name="wallet" size={24} color="#00A1D6" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Map')}>
-          <Ionicons name="map" size={24} color="#007AFF" />
+          <Ionicons name="map" size={24} color="#00A1D6" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('translator')}>
-          <Ionicons name="mic" size={24} color="#007AFF" />
+          <Ionicons name="mic" size={24} color="#00A1D6" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
-          <Ionicons name="airplane" size={24} color="#007AFF" />
+          <Ionicons name="airplane" size={24} color="#00A1D6" />
         </TouchableOpacity>
       </View>
     </View>
@@ -193,19 +191,27 @@ export default function TripDetailsScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f9f9f9', padding: 20, marginBottom: 60 },
+  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20, marginBottom: 60 },
   scrollViewContent: {
     paddingBottom: 80, // Space at the bottom for the navbar
   },
-  title: { fontSize: 26, fontWeight: 'bold', marginBottom: 10, color: '#007AFF' },
-  date: { fontSize: 18, marginBottom: 20, color: '#666' },
-  section: { marginBottom: 15 },
-  label: { fontWeight: 'bold', fontSize: 16, color: '#333' },
-  value: { fontSize: 16, marginTop: 4, color: '#555' },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: '#00A1D6', // Blue color
+    textShadowColor: '#005A6D', // Darker blue shadow
+    textShadowOffset: { width: 0, height: 3 },
+    textShadowRadius: 5,
+  },
+  date: { fontSize: 18, marginBottom: 20, color: '#005A6D' },
+  section: { marginBottom: 18 },
+  label: { fontWeight: 'bold', fontSize: 16, color: '#00A1D6' },
+  value: { fontSize: 16, marginTop: 6, color: '#333333' },
   mapButton: {
     marginTop: 20,
-    backgroundColor: '#34C759', // Apple green 💚
-    padding: 16,
+    backgroundColor: '#00A1D6', // Blue color
+    padding: 18,
     borderRadius: 12,
     alignItems: 'center',
     shadowColor: '#000',
@@ -226,7 +232,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#00A1D6', // Blue color
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -237,42 +243,43 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
+    marginLeft: 8,
   },
   buttonDelete: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: '#FF6347', // Red color for Delete
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    width: '48%',
+    width: '48%', // Ensures they sit side-by-side on large screens
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowRadius: 5,
+  },
+  navbar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#ffffff',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
   },
   icon: {
     marginRight: 8,
   },
-  buttonText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 16,
-  },
-
-  // Navbar Styling
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    height: 60,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-  },
 });
+

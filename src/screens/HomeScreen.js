@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator } fr
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Navbar from '../components/Navbar';
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
@@ -86,24 +87,7 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
 
       {/* Bottom Navigation */}
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Expense')}>
-          <Ionicons name="wallet" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
-          <Ionicons name="map" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('translator')}>
-          <Ionicons name="mic" size={24} color="#007AFF" />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
-          <Ionicons name="airplane" size={24} color="#007AFF" />
-        </TouchableOpacity>
-      </View>
+      <Navbar/>
     </View>
   );
 }
@@ -184,6 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '110%',
+    marginBottom:35,
   },
   fab: {
     position: 'absolute',
