@@ -14,6 +14,7 @@ import Map from'./src/screens/map';
 import VoiceToVoiceScreen from './src/screens/translator';
 import TripPlanScreen from './src/screens/TripPlanScreen'; 
 import Emergency_Contact_Screen from './src/screens/emergency_contact';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,9 @@ export default function App() {
         <Stack.Screen name="translator" component={VoiceToVoiceScreen} />
         <Stack.Screen name="TripPlan" component={TripPlanScreen} />
         <Stack.Screen name="emergency_contact" component={Emergency_Contact_Screen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+
+
 
 
 
