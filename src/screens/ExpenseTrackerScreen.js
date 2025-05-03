@@ -9,20 +9,23 @@ import {
   collection, addDoc, onSnapshot, query, orderBy, where
 } from 'firebase/firestore';
 import { doc, deleteDoc } from 'firebase/firestore';
-
 import { getAuth } from 'firebase/auth';
+import { jsPDF } from 'jspdf';
 
-export default function ExpenseTrackerScreen({ navigation,route  }) {
+const categories = ['Food', 'Hotel', 'Travel', 'Miscellaneous', 'Shopping', 'Medical'];
+
+export default function ExpenseTrackerScreen({ navigation, route }) {
   const [trips, setTrips] = useState([]);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const [expenses, setExpenses] = useState([]);
-
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
+  const [expenseName, setExpenseName] = useState('');
   const [userId, setUserId] = useState(null);
+  const [budget, setBudget] = useState(0);
+
   const preselectedTripId = route?.params?.tripId || null;
   const preselectedUserId = route?.params?.userId || null;
-
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,7 +33,6 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
 
     if (!user) return;
     const uid = preselectedUserId || user.uid;
-
 
     setUserId(uid);
 
@@ -49,7 +51,6 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
       if (preselectedTripId) {
         setSelectedTripId(preselectedTripId);
       }
-
     });
 
     return () => unsubscribeTrips();
@@ -57,7 +58,12 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
 
   useEffect(() => {
     if (!selectedTripId || !userId) return;
-  
+
+    const tripRef = doc(db, 'trips', selectedTripId);
+    const tripSnap = onSnapshot(tripRef, (doc) => {
+      setBudget(doc.data()?.budget || 0);
+    });
+
     const expensesRef = collection(
       db,
       'users',
@@ -66,9 +72,9 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
       selectedTripId,
       'expenses'
     );
-  
+
     const q = query(expensesRef, orderBy('createdAt', 'desc'));
-  
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -76,22 +82,31 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
       }));
       setExpenses(data);
     });
-  
-    return () => unsubscribe();
+
+    return () => {
+      tripSnap();
+      unsubscribe();
+    };
   }, [selectedTripId, userId]);
-  
+
   const addExpense = async () => {
-    if (!category.trim() || !amount.trim()) {
-      Alert.alert('Missing Fields', 'Please enter both category and amount.');
+    if (!category.trim() || !amount.trim() || !expenseName.trim()) {
+      Alert.alert('Missing Fields', 'Please enter all fields.');
       return;
     }
-  
+
     const parsedAmount = parseFloat(amount);
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       Alert.alert('Invalid Amount', 'Please enter a valid positive number.');
       return;
     }
-  
+
+    const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
+    if (totalSpent + parsedAmount > budget) {
+      Alert.alert('Budget Exceeded', 'You have exceeded the budget for this trip!');
+      return;
+    }
+
     try {
       const expenseRef = collection(
         db,
@@ -101,20 +116,23 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
         selectedTripId,
         'expenses'
       );
-  
+
       await addDoc(expenseRef, {
         category: category.trim(),
         amount: parsedAmount,
+        expenseName: expenseName.trim(),
         createdAt: new Date(),
       });
-  
+
       setCategory('');
       setAmount('');
+      setExpenseName('');
     } catch (error) {
       console.error('Error adding expense:', error);
       Alert.alert('Error', 'Could not add expense. Please try again.');
     }
   };
+
   const deleteExpense = async (expenseId) => {
     try {
       await deleteDoc(
@@ -125,15 +143,27 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
       Alert.alert('Error', 'Could not delete expense.');
     }
   };
-  
-  
-  const total = expenses.reduce((sum, e) => sum + e.amount, 0);
 
-  const formatDate = (date) => {
-    if (!date?.toDate) return '';
-    const d = date.toDate();
-    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    doc.text('Expense Tracker - Trip Summary', 20, 10);
+    doc.text(`Trip Budget: ₹${budget.toFixed(2)}`, 20, 20);
+    doc.text(`Total Spent: ₹${expenses.reduce((sum, e) => sum + e.amount, 0).toFixed(2)}`, 20, 30);
+
+    let yOffset = 40;
+
+    expenses.forEach((expense) => {
+      doc.text(`Expense Name: ${expense.expenseName}`, 20, yOffset);
+      doc.text(`Category: ${expense.category}`, 20, yOffset + 10);
+      doc.text(`Amount: ₹${expense.amount.toFixed(2)}`, 20, yOffset + 20);
+      yOffset += 30;
+    });
+
+    doc.save('Expense_Tracker.pdf');
   };
+
+  const total = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -158,7 +188,7 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
             >
               <Text style={styles.tripName}>{item.destination}</Text>
               <Text style={styles.date}>
-                {formatDate(item.startDate)} → {formatDate(item.endDate)}
+                {new Date(item.startDate.seconds * 1000).toLocaleDateString()} → {new Date(item.endDate.seconds * 1000).toLocaleDateString()}
               </Text>
             </TouchableOpacity>
           )}
@@ -171,9 +201,9 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Category (e.g. Food, Transport)"
-                value={category}
-                onChangeText={setCategory}
+                placeholder="Expense Name"
+                value={expenseName}
+                onChangeText={setExpenseName}
               />
               <TextInput
                 style={styles.input}
@@ -182,27 +212,45 @@ export default function ExpenseTrackerScreen({ navigation,route  }) {
                 onChangeText={setAmount}
                 keyboardType="numeric"
               />
+              <View style={styles.categoryContainer}>
+                {categories.map((cat) => (
+                  <TouchableOpacity
+                    key={cat}
+                    style={[styles.categoryTile, category === cat && styles.categorySelected]}
+                    onPress={() => setCategory(cat)}
+                  >
+                    <Text style={styles.categoryText}>{cat}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
               <Button title="Add Expense" onPress={addExpense} />
             </View>
 
             <Text style={styles.total}>Total Spent: ₹{total.toFixed(2)}</Text>
+            <Text style={styles.total}>Remaining Budget: ₹{(budget - total).toFixed(2)}</Text>
+
+            {total > budget && (
+              <Text style={styles.alert}>🚨 You have exceeded your budget!</Text>
+            )}
 
             <FlatList
               data={expenses}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <View style={styles.expenseItem}>
-                  <View>                  
-                  <Text style={styles.expenseText}>{item.category}</Text>
-                  <Text style={styles.expenseAmount}>₹{item.amount.toFixed(2)}</Text>
+                  <View>
+                    <Text style={styles.expenseText}>{item.expenseName}</Text>
+                    <Text style={styles.expenseCategory}>{item.category}</Text>
+                    <Text style={styles.expenseAmount}>₹{item.amount.toFixed(2)}</Text>
                   </View>
                   <TouchableOpacity onPress={() => deleteExpense(item.id)}>
-        <Text style={styles.deleteIcon}>❌</Text>
-      </TouchableOpacity>
-
+                    <Text style={styles.deleteIcon}>❌</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             />
+
+            <Button title="Download PDF" onPress={generatePDF} />
           </>
         )}
       </KeyboardAvoidingView>
@@ -265,11 +313,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     fontSize: 16,
   },
+  categoryContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 12,
+  },
+  categoryTile: {
+    backgroundColor: '#d1d5db',
+    borderRadius: 8,
+    padding: 8,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  categorySelected: {
+    backgroundColor: '#2563eb',
+  },
+  categoryText: {
+    color: '#ffffff',
+    fontSize: 14,
+  },
   total: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#0f172a',
     marginBottom: 18,
+  },
+  alert: {
+    color: 'red',
+    fontSize: 16,
   },
   expenseItem: {
     flexDirection: 'row',
@@ -290,11 +361,14 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#1e293b',
   },
+  expenseCategory: {
+    fontSize: 14,
+    color: '#6b7280',
+  },
   expenseAmount: {
     fontSize: 16,
     fontWeight: '600',
     color: '#16a34a',
-    marginTop: 4,
   },
   deleteIcon: {
     fontSize: 20,
