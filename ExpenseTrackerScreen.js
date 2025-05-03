@@ -15,9 +15,7 @@ import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as Print from 'expo-print';
 import { ScrollView } from 'react-native';
-import Navbar from '../components/Navbar';
-import Header from '../components/Header';
-import { Asset } from 'expo-asset';
+
 
 
 const categories = ['Food', 'Hotel', 'Travel', 'Miscellaneous', 'Shopping', 'Medical'];
@@ -34,7 +32,7 @@ export default function ExpenseTrackerScreen({ navigation, route }) {
 
   const preselectedTripId = route?.params?.tripId || null;
   const preselectedUserId = route?.params?.userId || null;
-const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
+
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -152,7 +150,7 @@ const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
     }
   };
 
- const generatePDF = async () => {
+  const generatePDF = async () => {
     console.log('expense:',expenses[0].amount);
     try{
     let htmlContent = `
@@ -210,14 +208,7 @@ const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
             font-size: 14px;
             color: #555;
             margin-left: 10px;
-          } .logo {
-          display: block;
-          margin: 0 auto 20px;
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;  /* Circular shape */
-          object-fit: cover;  /* Ensures the logo maintains aspect ratio */
-        }
+          }
           .footer {
             margin-top: 40px;
             text-align: center;
@@ -230,9 +221,7 @@ const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
         </style>
       </head>
       <body>
-      <img src="${logo}" class="logo" alt="Company Logo" />
-        <div class="heading">Expense Tracker</div>
-
+        <div class="heading">Expense Tracker - Trip Summary</div>
         <div class="subheading">Managed by IniyaPayanam 💼</div>
     
         <div class="summary-block">
@@ -283,8 +272,6 @@ const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
 
 
   return (
-    <>
-    <Header/>
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
               
@@ -295,46 +282,27 @@ const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
         <Text style={styles.title}>💰 Expense Tracker</Text>
 
         <Text style={styles.sectionTitle}>Select a Trip</Text>
-        <ScrollView
-  horizontal
-  style={{ marginBottom: 15 }}
-  showsHorizontalScrollIndicator={false}
->
-  <View style={{ flexDirection: 'row', marginBottom: 15 }}>
-    {trips.length > 0 ? (
-      trips.map((item) => (
-        <TouchableOpacity
-  key={item.id}
-  style={[
-    styles.tripCard,
-    item.id === selectedTripId && styles.tripCardSelected,
-  ]}
-  onPress={() => setSelectedTripId(item.id)}
->
-  <Text
-    style={[
-      styles.tripName,
-      item.id === selectedTripId && styles.tripTextSelected,
-    ]}
-  >
-    {item.tripName}
-  </Text>
-  <Text
-    style={[
-      styles.date,
-      item.id === selectedTripId && styles.tripTextSelected,
-    ]}
-  >
-    {formatDate(item.startDate)} → {formatDate(item.endDate)}
-  </Text>
-</TouchableOpacity>
-      ))
-    ) : (
-      <Text>No trips found.</Text>
-    )}
-  </View>
-</ScrollView>
-
+        <View style={{ flexDirection: 'row', marginBottom: 15 }}>
+  {trips.length > 0 ? (
+    trips.map((item) => (
+      <TouchableOpacity
+        key={item.id}
+        style={[
+          styles.tripCard,
+          item.id === selectedTripId && styles.tripCardSelected,
+        ]}
+        onPress={() => setSelectedTripId(item.id)}
+      >
+        <Text style={styles.tripName}>{item.tripName}</Text>
+        <Text style={styles.date}>
+        {formatDate(item.startDate)} → {formatDate(item.endDate)}
+        </Text>
+      </TouchableOpacity>
+    ))
+  ) : (
+    <Text>No trips found.</Text>
+  )}
+</View>
         {selectedTripId && (
           <>
             <View style={styles.inputContainer}>
@@ -393,8 +361,6 @@ const logo = Asset.fromModule(require('../../assets/img/Logo.png')).uri;
 
 
     </View>
-    <Navbar/>
-    </>
   );
 }
 
@@ -402,11 +368,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop:70,
     backgroundColor: '#f9fafb',
   },
   scrollViewContent: {
-    paddingBottom: 130, 
+    paddingBottom: 80, 
   },
 
   title: {
@@ -423,30 +388,24 @@ const styles = StyleSheet.create({
     color: '#334155',
   },
   tripCard: {
-    padding: 10,
-    marginRight: 15,
+    padding: 14,
     borderRadius: 10,
-    backgroundColor: '#E0F0FF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    backgroundColor: '#e2e8f0',
+    marginRight: 12,
+    minWidth: 120,
   },
   tripCardSelected: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#2563eb',
   },
   tripName: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#003366',
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: 4,
   },
   date: {
-    fontSize: 12,
-    color: '#1C3F60',
-  },
-  tripTextSelected: {
-    color: '#FFFFFF',
+    fontSize: 14,
+    color: '#f1f5f9',
   },
   inputContainer: {
     marginBottom: 24,

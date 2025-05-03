@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     
     flex: 1, 
     backgroundColor: '#FFFFFF', 
-    padding: 20, 
+    padding: 30, 
     paddingBottom: 120, // Increase padding to prevent hidden button
   },
 

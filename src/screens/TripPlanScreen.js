@@ -310,7 +310,7 @@ export default function TripPlanScreen({ route, navigation }) {
   return (
     <>
     <Header/>
-    <View style={styles.container}>
+    <View style={styles.container} >
       <Text style={styles.heading}>Trip Plan: {trip.tripName || trip.destination}</Text>
 
       {loading ? (
@@ -346,6 +346,7 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     backgroundColor: '#F0F8FF',
     flex: 1,
+    marginTop: 70
   },
   heading: {
     fontSize: 22,

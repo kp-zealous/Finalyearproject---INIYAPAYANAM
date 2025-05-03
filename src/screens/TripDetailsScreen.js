@@ -101,7 +101,7 @@ export default function TripDetailsScreen({ route }) {
   return (
   <>
   <Header/>
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} contentContainerStyle={{ marginTop: 130 }}>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.title}>🌍 {trip.destination}</Text>
         <Text style={styles.date}>
@@ -179,9 +179,11 @@ export default function TripDetailsScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20, marginBottom: 60,margintop:20, },
+  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20, marginBottom: 40, paddingtop:260, },
   scrollViewContent: {
-    paddingBottom: 80, // Space at the bottom for the navbar
+    paddingBottom: 140,
+    marginTop:60,
+    // Space at the bottom for the navbar
   },
   title: {
     fontSize: 28,
