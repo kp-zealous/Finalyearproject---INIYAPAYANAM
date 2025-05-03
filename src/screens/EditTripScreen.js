@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import Navbar from '../components/Navbar';
+import Header from '../components/Header';
 
 export default function EditTripScreen({ route, navigation }) {
   const { tripId } = route.params;
@@ -124,121 +125,130 @@ export default function EditTripScreen({ route, navigation }) {
   if (loading) return <Text style={{ margin: 20 }}>Loading trip...</Text>;
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>✏️ Edit Trip</Text>
+    <>
+      <Header />
+      <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
+        <Text style={styles.title}>✏️ Edit Trip</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Trip Name"
-        value={tripName}
-        onChangeText={setTripName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Destination"
-        value={destination}
-        onChangeText={setDestination}
-      />
-
-      {/* Date Pickers */}
-      <TouchableOpacity onPress={() => setShowStartPicker(true)}>
-        <Text style={styles.input}>Start Date: {formatDate(startDate)}</Text>
-      </TouchableOpacity>
-      {showStartPicker && (
-        <DateTimePicker
-          value={startDate}
-          mode="date"
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          onChange={(e, date) => {
-            setShowStartPicker(false);
-            if (date) setStartDate(date);
-          }}
+        <TextInput
+          style={styles.input}
+          placeholder="Trip Name"
+          value={tripName}
+          onChangeText={setTripName}
         />
-      )}
-
-      <TouchableOpacity onPress={() => setShowEndPicker(true)}>
-        <Text style={styles.input}>End Date: {formatDate(endDate)}</Text>
-      </TouchableOpacity>
-      {showEndPicker && (
-        <DateTimePicker
-          value={endDate}
-          mode="date"
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          onChange={(e, date) => {
-            setShowEndPicker(false);
-            if (date) setEndDate(date);
-          }}
+        <TextInput
+          style={styles.input}
+          placeholder="Destination"
+          value={destination}
+          onChangeText={setDestination}
         />
-      )}
 
-      <TextInput
-        style={styles.input}
-        placeholder="Budget"
-        value={budget}
-        onChangeText={setBudget}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Number of Travelers"
-        value={travelers}
-        onChangeText={setTravelers}
-        keyboardType="numeric"
-      />
+        {/* Date Pickers */}
+        <TouchableOpacity onPress={() => setShowStartPicker(true)}>
+          <Text style={styles.input}>Start Date: {formatDate(startDate)}</Text>
+        </TouchableOpacity>
+        {showStartPicker && (
+          <DateTimePicker
+            value={startDate}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={(e, date) => {
+              setShowStartPicker(false);
+              if (date) setStartDate(date);
+            }}
+          />
+        )}
 
-      {/* Transport Modes */}
-      <Text style={styles.sectionTitle}>Transport Modes</Text>
-      <View style={styles.checkboxGroup}>
-        {transportOptions.map(mode => (
-          <View key={mode} style={styles.checkboxRow}>
-            <Checkbox
-              value={!!transportModes[mode]}
-              onValueChange={() => toggleTransport(mode)}
-              color={transportModes[mode] ? '#007AFF' : undefined}
-            />
-            <Text style={styles.checkboxLabel}>
-              {mode === 'owncar' ? 'Own Car' : mode.charAt(0).toUpperCase() + mode.slice(1)}
-            </Text>
-          </View>
-        ))}
-      </View>
+        <TouchableOpacity onPress={() => setShowEndPicker(true)}>
+          <Text style={styles.input}>End Date: {formatDate(endDate)}</Text>
+        </TouchableOpacity>
+        {showEndPicker && (
+          <DateTimePicker
+            value={endDate}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={(e, date) => {
+              setShowEndPicker(false);
+              if (date) setEndDate(date);
+            }}
+          />
+        )}
 
-      {/* Travel Style */}
-      <Text style={styles.sectionTitle}>Travel Style</Text>
-      <View style={styles.radioGroup}>
-        {['fast', 'comfort'].map((style) => (
-          <TouchableOpacity key={style} style={styles.radioOption} onPress={() => setTravelStyle(style)}>
-            <View style={styles.radioCircle}>
-              {travelStyle === style && <View style={styles.radioSelected} />}
+        <TextInput
+          style={styles.input}
+          placeholder="Budget"
+          value={budget}
+          onChangeText={setBudget}
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Number of Travelers"
+          value={travelers}
+          onChangeText={setTravelers}
+          keyboardType="numeric"
+        />
+
+        {/* Transport Modes */}
+        <Text style={styles.sectionTitle}>Transport Modes</Text>
+        <View style={styles.checkboxGroup}>
+          {transportOptions.map(mode => (
+            <View key={mode} style={styles.checkboxRow}>
+              <Checkbox
+                value={!!transportModes[mode]}
+                onValueChange={() => toggleTransport(mode)}
+                color={transportModes[mode] ? '#007AFF' : undefined}
+              />
+              <Text style={styles.checkboxLabel}>
+                {mode === 'owncar' ? 'Own Car' : mode.charAt(0).toUpperCase() + mode.slice(1)}
+              </Text>
             </View>
-            <Text>{style === 'fast' ? 'Fastest Route' : 'Comfort Trip'}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+          ))}
+        </View>
 
-      {/* Places & Notes */}
-      <TextInput
-        style={styles.input}
-        placeholder="Places to visit (comma separated)"
-        value={places}
-        onChangeText={setPlaces}
-      />
-      <TextInput
-        style={[styles.input, { height: 60 }]}
-        placeholder="Notes / Preferences"
-        value={notes}
-        onChangeText={setNotes}
-        multiline
-      />
+        {/* Travel Style */}
+        <Text style={styles.sectionTitle}>Travel Style</Text>
+        <View style={styles.radioGroup}>
+          {['fast', 'comfort'].map((style) => (
+            <TouchableOpacity key={style} style={styles.radioOption} onPress={() => setTravelStyle(style)}>
+              <View style={styles.radioCircle}>
+                {travelStyle === style && <View style={styles.radioSelected} />}
+              </View>
+              <Text>{style === 'fast' ? 'Fastest Route' : 'Comfort Trip'}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
-      <Button title="Update Trip" onPress={handleUpdateTrip} />
-      <Navbar/>
-    </ScrollView>
+        {/* Places & Notes */}
+        <TextInput
+          style={styles.input}
+          placeholder="Places to visit (comma separated)"
+          value={places}
+          onChangeText={setPlaces}
+        />
+        <TextInput
+          style={[styles.input, { height: 60 }]}
+          placeholder="Notes / Preferences"
+          value={notes}
+          onChangeText={setNotes}
+          multiline
+        />
+
+        <Button title="Update Trip" onPress={handleUpdateTrip} />
+      </ScrollView>
+      <Navbar />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, backgroundColor: '#f9f9f9' },
+  container: {
+    marginTop: 70,
+    padding: 20,
+    backgroundColor: '#f9f9f9',
+    paddingBottom: 240,
+    marginBottom:90, // Adjusted padding to ensure button visibility
+  },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, color: '#007AFF' },
   input: {
     backgroundColor: '#fff',

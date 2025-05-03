@@ -1,0 +1,149 @@
+{
+  "countries": [
+    {
+      "name": "India",
+      "states": [
+        {
+          "name": "Tamil Nadu",
+          "cities": [
+            {"name": "Chennai", "email": "chennai_feedback@example.com"},
+            {"name": "Coimbatore", "email": "coimbatore_feedback@example.com"},
+            {"name": "Madurai", "email": "madurai_feedback@example.com"},
+            {"name": "Salem", "email": "salem_feedback@example.com"},
+            {"name": "Tiruchirappalli", "email": "tiruchirappalli_feedback@example.com"},
+            {"name": "Erode", "email": "erode_feedback@example.com"},
+            {"name": "Vellore", "email": "vellore_feedback@example.com"},
+            {"name": "Dindigul", "email": "dindigul_feedback@example.com"},
+            {"name": "Chidambaram", "email": "chidambaram_feedback@example.com"},
+            {"name": "Thanjavur", "email": "thanjavur_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "Maharashtra",
+          "cities": [
+            {"name": "Mumbai", "email": "mumbai_feedback@example.com"},
+            {"name": "Pune", "email": "pune_feedback@example.com"},
+            {"name": "Nagpur", "email": "nagpur_feedback@example.com"},
+            {"name": "Nashik", "email": "nashik_feedback@example.com"},
+            {"name": "Aurangabad", "email": "aurangabad_feedback@example.com"},
+            {"name": "Thane", "email": "thane_feedback@example.com"},
+            {"name": "Solapur", "email": "solapur_feedback@example.com"},
+            {"name": "Kolhapur", "email": "kolhapur_feedback@example.com"},
+            {"name": "Jalgaon", "email": "jalgaon_feedback@example.com"},
+            {"name": "Latur", "email": "latur_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "Karnataka",
+          "cities": [
+            {"name": "Bengaluru", "email": "bengaluru_feedback@example.com"},
+            {"name": "Mysuru", "email": "mysuru_feedback@example.com"},
+            {"name": "Hubballi", "email": "hubballi_feedback@example.com"},
+            {"name": "Mangalore", "email": "mangalore_feedback@example.com"},
+            {"name": "Belagavi", "email": "belagavi_feedback@example.com"},
+            {"name": "Shivamogga", "email": "shivamogga_feedback@example.com"},
+            {"name": "Tumkur", "email": "tumkur_feedback@example.com"},
+            {"name": "Davangere", "email": "davangere_feedback@example.com"},
+            {"name": "Chitradurga", "email": "chitradurga_feedback@example.com"},
+            {"name": "Raichur", "email": "raichur_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "Andhra Pradesh",
+          "cities": [
+            {"name": "Visakhapatnam", "email": "visakhapatnam_feedback@example.com"},
+            {"name": "Vijayawada", "email": "vijayawada_feedback@example.com"},
+            {"name": "Guntur", "email": "guntur_feedback@example.com"},
+            {"name": "Kurnool", "email": "kurnool_feedback@example.com"},
+            {"name": "Rajahmundry", "email": "rajahmundry_feedback@example.com"},
+            {"name": "Nellore", "email": "nellore_feedback@example.com"},
+            {"name": "Tirupati", "email": "tirupati_feedback@example.com"},
+            {"name": "Chittoor", "email": "chittoor_feedback@example.com"},
+            {"name": "Kadapa", "email": "kadapa_feedback@example.com"},
+            {"name": "Anantapur", "email": "anantapur_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "Uttar Pradesh",
+          "cities": [
+            {"name": "Lucknow", "email": "lucknow_feedback@example.com"},
+            {"name": "Kanpur", "email": "kanpur_feedback@example.com"},
+            {"name": "Varanasi", "email": "varanasi_feedback@example.com"},
+            {"name": "Agra", "email": "agra_feedback@example.com"},
+            {"name": "Allahabad", "email": "allahabad_feedback@example.com"},
+            {"name": "Meerut", "email": "meerut_feedback@example.com"},
+            {"name": "Gorakhpur", "email": "gorakhpur_feedback@example.com"},
+            {"name": "Mathura", "email": "mathura_feedback@example.com"},
+            {"name": "Firozabad", "email": "firozabad_feedback@example.com"},
+            {"name": "Aligarh", "email": "aligarh_feedback@example.com"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "USA",
+      "states": [
+        {
+          "name": "California",
+          "cities": [
+            {"name": "San Francisco", "email": "sf_feedback@example.com"},
+            {"name": "Los Angeles", "email": "la_feedback@example.com"},
+            {"name": "San Diego", "email": "sd_feedback@example.com"},
+            {"name": "Sacramento", "email": "sacramento_feedback@example.com"},
+            {"name": "Fresno", "email": "fresno_feedback@example.com"},
+            {"name": "Long Beach", "email": "longbeach_feedback@example.com"},
+            {"name": "Oakland", "email": "oakland_feedback@example.com"},
+            {"name": "Anaheim", "email": "anaheim_feedback@example.com"},
+            {"name": "Santa Clara", "email": "santaclara_feedback@example.com"},
+            {"name": "Irvine", "email": "irvine_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "Texas",
+          "cities": [
+            {"name": "Houston", "email": "houston_feedback@example.com"},
+            {"name": "Dallas", "email": "dallas_feedback@example.com"},
+            {"name": "Austin", "email": "austin_feedback@example.com"},
+            {"name": "San Antonio", "email": "sanantonio_feedback@example.com"},
+            {"name": "Fort Worth", "email": "fortworth_feedback@example.com"},
+            {"name": "El Paso", "email": "elpaso_feedback@example.com"},
+            {"name": "Arlington", "email": "arlington_feedback@example.com"},
+            {"name": "Corpus Christi", "email": "corpuschristi_feedback@example.com"},
+            {"name": "Plano", "email": "plano_feedback@example.com"},
+            {"name": "Lubbock", "email": "lubbock_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "Florida",
+          "cities": [
+            {"name": "Miami", "email": "miami_feedback@example.com"},
+            {"name": "Orlando", "email": "orlando_feedback@example.com"},
+            {"name": "Tampa", "email": "tampa_feedback@example.com"},
+            {"name": "Jacksonville", "email": "jacksonville_feedback@example.com"},
+            {"name": "St. Petersburg", "email": "stpetersburg_feedback@example.com"},
+            {"name": "Hialeah", "email": "hialeah_feedback@example.com"},
+            {"name": "Tallahassee", "email": "tallahassee_feedback@example.com"},
+            {"name": "Fort Lauderdale", "email": "fortlauderdale_feedback@example.com"},
+            {"name": "Pembroke Pines", "email": "pembrokepines_feedback@example.com"},
+            {"name": "Cape Coral", "email": "capecoral_feedback@example.com"}
+          ]
+        },
+        {
+          "name": "New York",
+          "cities": [
+            {"name": "New York City", "email": "nyc_feedback@example.com"},
+            {"name": "Buffalo", "email": "buffalo_feedback@example.com"},
+            {"name": "Rochester", "email": "rochester_feedback@example.com"},
+            {"name": "Yonkers", "email": "yonkers_feedback@example.com"},
+            {"name": "Syracuse", "email": "syracuse_feedback@example.com"},
+            {"name": "Albany", "email": "albany_feedback@example.com"},
+            {"name": "New Rochelle", "email": "newrochelle_feedback@example.com"},
+            {"name": "Mount Vernon", "email": "mountvernon_feedback@example.com"},
+            {"name": "Schenectady", "email": "schenectady_feedback@example.com"},
+            {"name": "Troy", "email": "troy_feedback@example.com"}
+          ]
+        }
+      ]
+    }
+  ]
+}

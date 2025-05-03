@@ -5,6 +5,7 @@ import * as Location from "expo-location";
 import axios from "axios";
 import { StyleSheet } from 'react-native';
 import Navbar from '../components/Navbar';
+import Header from '../components/Header';
 
 export default function Map() {
   const [location, setLocation] = useState(null);
@@ -183,6 +184,8 @@ export default function Map() {
   };
 
   return (
+    <>
+    <Header/>
     <View style={styles.container}>
       {region && (
         <MapView style={styles.map} initialRegion={region} zoomControlEnabled showsTraffic showsUserLocation showsMyLocationButton={true}>
@@ -325,13 +328,15 @@ export default function Map() {
         )}
       </View>
 
-      <Navbar />
+      
     </View>
+    <Navbar />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: '#fff',paddingTop:50,marginTop:50 },
   map: { flex: 1 },
   searchBoxContainer: {
     position: 'absolute',

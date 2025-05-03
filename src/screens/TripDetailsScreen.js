@@ -12,7 +12,8 @@ import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { Ionicons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native'; 
-import Navbar from '../components/Navbar';//// Added for responsive design
+import Navbar from '../components/Navbar';
+import Header from '../components/Header';//// Added for responsive design
 
 export default function TripDetailsScreen({ route }) {
   const { trip, tripId, userId } = route.params;  // Added userId here
@@ -98,6 +99,8 @@ export default function TripDetailsScreen({ route }) {
   };
 
   return (
+  <>
+  <Header/>
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.title}>🌍 {trip.destination}</Text>
@@ -171,6 +174,7 @@ export default function TripDetailsScreen({ route }) {
       {/* Navbar */}
       <Navbar/>
     </View>
+  </>
   );
 }
 

@@ -9,6 +9,7 @@ import * as FileSystem from 'expo-file-system';
  // This might work depending on your build setup
  import { Asset } from 'expo-asset';
  import Navbar from '../components/Navbar';
+ import Header from '../components/Header';
 
 
 function calculateDays(startDate, endDate) {
@@ -307,6 +308,8 @@ export default function TripPlanScreen({ route, navigation }) {
   );
 
   return (
+    <>
+    <Header/>
     <View style={styles.container}>
       <Text style={styles.heading}>Trip Plan: {trip.tripName || trip.destination}</Text>
 
@@ -333,6 +336,7 @@ export default function TripPlanScreen({ route, navigation }) {
 <Navbar/>
       
     </View>
+    </>
   );
 }
 

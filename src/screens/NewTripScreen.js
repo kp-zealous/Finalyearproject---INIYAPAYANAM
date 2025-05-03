@@ -14,6 +14,8 @@ import Checkbox from 'expo-checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { getAuth } from 'firebase/auth';
 import { db } from '../config/firebase';
+import Navbar from '../components/Navbar';
+import Header from '../components/Header';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
 export default function NewTripScreen({ navigation }) {
@@ -83,7 +85,9 @@ export default function NewTripScreen({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <>
+    <Header/>
+    <ScrollView contentContainerStyle={{ paddingTop:90,paddingBottom: 120 }}>
       <Text style={styles.title}>🚀 Plan Your Trip</Text>
       <TextInput
         style={styles.input}
@@ -188,13 +192,22 @@ export default function NewTripScreen({ navigation }) {
 
       <Button title="Start Trip" onPress={handleStartTrip} color="#007AFF" />
     </ScrollView>
+    <Navbar/>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20, marginBottom: 60,margintop:20, },
+  container: { 
+    
+    flex: 1, 
+    backgroundColor: '#FFFFFF', 
+    padding: 20, 
+    paddingBottom: 120, // Increase padding to prevent hidden button
+  },
+
   scrollViewContent: {
-    paddingBottom: 80, // Space at the bottom for the navbar
+    paddingBottom: 90, // Space at the bottom for the navbar
   },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, color: '#007AFF' },
   input: {

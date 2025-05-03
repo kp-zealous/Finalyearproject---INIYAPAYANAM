@@ -19,6 +19,7 @@ import { db } from '../config/firebase';
 import { getAuth } from 'firebase/auth';
 import { Ionicons } from '@expo/vector-icons';
 import Navbar from '../components/Navbar';
+import Header from '../components/Header';
 
 const { width } = Dimensions.get('window');
 
@@ -72,6 +73,8 @@ export default function TripListScreen({ navigation }) {
   };
 
   return (
+    <>
+    <Header/>
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
         <Text style={styles.title}>🧳 My Trips</Text>
@@ -125,6 +128,7 @@ export default function TripListScreen({ navigation }) {
 
       <Navbar />
     </View>
+    </>
   );
 }
 

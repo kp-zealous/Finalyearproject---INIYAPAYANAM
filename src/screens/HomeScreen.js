@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase'; // Firebase setup
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Navbar from '../components/Navbar';
+import Header from '../components/Header';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [trips, setTrips] = useState([]);
 
+  // Fetch current user authentication status
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        fetchTrips(); // Fetch trips data from Firestore after user is authenticated
       } else {
         navigation.replace('Login');
       }
@@ -22,168 +36,198 @@ export default function HomeScreen({ navigation }) {
     return unsubscribe;
   }, []);
 
+ const fetchTrips = async () => {
+  try {
+    const tripsRef = collection(db, 'trip_plans'); // Reference to Firestore collection
+    const tripSnapshot = await getDocs(tripsRef);
+    const tripList = tripSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    // Filter trips to only include the current user's trips
+    const userTrips = tripList.filter(trip => trip.userId === user.uid);
+
+    setTrips(userTrips); // Set filtered trips to the state
+  } catch (error) {
+    console.error('Error fetching trips:', error);
+  }
+};
+
+  
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
       navigation.replace('Login');
     } catch (error) {
-      console.error("Logout error:", error.message);
+      console.error('Logout error:', error.message);
     }
   };
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#007AFF" />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Iniyapayanam</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Image
-            source={{ uri: 'https://i.pravatar.cc/100' }}
-            style={styles.avatar}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.avatar} onPress={() => navigation.navigate('emergency_contact')}>
-        <Ionicons name="call" size={28} color="#4caf50" />
-      </TouchableOpacity>
+    <>
+      <Header />
+      <View style={styles.container}>
+        <View style={styles.headerRow}>
+          <View>
+            <Text style={styles.welcome}>Hi, {user ? user.displayName || user.email : 'Guest'}</Text>
+            <Text style={styles.subtitle}>Where are you traveling today?</Text>
+          </View>
+         
+        </View>
 
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+          <View style={styles.tileGrid}>
+            <TouchableOpacity style={styles.tile} onPress={() => navigation.navigate('Map')}>
+              <Ionicons name="map" size={30} color="#007AFF" />
+              <Text style={styles.tileText}>Map</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.tile} onPress={() => navigation.navigate('Translator')}>
+              <Ionicons name="language" size={30} color="#4CAF50" />
+              <Text style={styles.tileText}>Voice Translator</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.tile} onPress={() => navigation.navigate('Expense')}>
+              <Ionicons name="wallet" size={30} color="#FF9800" />
+              <Text style={styles.tileText}>Expense Tracker</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.tile} onPress={() => navigation.navigate('ComplaintFeedback')}>
+              <MaterialCommunityIcons name="comment-question" size={30} color="#FF5722" />
+              <Text style={styles.tileText}>Complaint/Feedback</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Horizontal scroll view for trip tiles */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.tripRow}>
+              {trips.map((trip) => (
+                <TouchableOpacity
+                  key={trip.id}
+                  style={styles.tripTile}
+                  onPress={() => navigation.navigate('TripPlan', { tripId: trip.id })}
+                >
+                  <Text style={styles.tripTileText}>{trip.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
+
+          {/* Logout button */}
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
-
-      <Text style={styles.subTitle}>Welcome, {user?.displayName || user?.email} 👋</Text>
-
-      {/* Feature Cards */}
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Expense')}>
-        <Ionicons name="wallet" size={28} color="#4caf50" />
-        <Text style={styles.cardText}>Expense Tracker</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AIAssistant')}>
-        <MaterialCommunityIcons name="robot" size={28} color="#ff9800" />
-        <Text style={styles.cardText}>AI Voice Assistant</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.cardDisabled}>
-        <Ionicons name="language" size={28} color="#9e9e9e" />
-        <Text style={styles.cardTextDisabled}>Multi-Language (Soon)</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
-
-      {/* Floating + Button for Travel Plan */}
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => navigation.navigate('NewTrip')}
-      >
-        <Ionicons name="add" size={28} color="#fff" />
-      </TouchableOpacity>
-
-      {/* Bottom Navigation */}
-      <Navbar/>
-    </View>
+      <Navbar />
+    </>
   );
 }
+
+const tileSize = (Dimensions.get('window').width - 60) / 2;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f7fa',
+    backgroundColor: '#F8FAFC',
     paddingTop: 50,
     paddingHorizontal: 20,
     paddingBottom: 70,
+    marginTop: 40,
   },
-  header: {
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 25,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+  welcome: {
+    fontSize: 24,
+    fontWeight: '700',
     color: '#007AFF',
   },
-  subTitle: {
-    fontSize: 18,
-    marginVertical: 20,
+  subtitle: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 4,
   },
   avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    borderWidth: 2,
+    borderColor: '#007AFF',
   },
-  card: {
-    backgroundColor: '#e0f2f1',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
+  scrollContent: {
+    paddingBottom: 30,
+  },
+  tileGrid: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 24,
   },
-  cardDisabled: {
-    backgroundColor: '#eeeeee',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-    flexDirection: 'row',
+  tile: {
+    backgroundColor: '#E3F2FD',
+    width: tileSize,
+    height: tileSize,
+    borderRadius: 16,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
+    marginBottom: 16,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
   },
-  cardText: {
-    fontSize: 16,
+  tileText: {
+    marginTop: 8,
+    fontSize: 14,
     fontWeight: '600',
   },
-  cardTextDisabled: {
-    fontSize: 16,
+  tripRow: {
+    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 30,
+  },
+  tripTile: {
+    backgroundColor: '#E1F5FE',
+    padding: 12,
+    borderRadius: 12,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tripTileText: {
+    fontSize: 14,
     fontWeight: '600',
-    color: '#9e9e9e',
+    color: '#007AFF',
   },
   logoutButton: {
-    backgroundColor: '#ff5252',
-    padding: 10,
+    backgroundColor: '#607D8B',
+    marginTop: 20,
+    padding: 12,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
   },
   logoutText: {
     color: '#fff',
     fontWeight: 'bold',
-  },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    height: 60,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '110%',
-    marginBottom:35,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 80,
-    right: 20,
-    backgroundColor: '#007AFF',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
   },
 });

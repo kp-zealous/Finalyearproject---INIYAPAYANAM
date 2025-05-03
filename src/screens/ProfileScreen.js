@@ -6,6 +6,8 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { pickImage } from '../helpers/ImageHelper';
 import { onAuthStateChanged, updateProfile } from 'firebase/auth';
+import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 
 const defaultProfilePic = 'https://i.pravatar.cc/100';
 
@@ -116,6 +118,8 @@ const ProfileScreen = () => {
   if (loading) return <ActivityIndicator size="large" />;
 
   return (
+    <>
+    <Header/>
     <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity onPress={handleImageUpload} style={styles.avatarContainer}>
         <Image source={{ uri: profilePic }} style={styles.avatar} />
@@ -199,6 +203,8 @@ const ProfileScreen = () => {
         </View>
       </Modal>
     </ScrollView>
+    <Navbar/>
+    </>
   );
 };
 

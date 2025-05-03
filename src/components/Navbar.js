@@ -17,7 +17,7 @@ const Navbar = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Map')}>
         <Ionicons name="map" size={24} color="#007AFF" />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('translator')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Translator')}>
         <Ionicons name="mic" size={24} color="#007AFF" />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('TripList')}>

@@ -4,6 +4,7 @@ import { Audio } from 'expo-av';
 import { AudioPlayer } from './Audioplayer'; 
 import { Ionicons } from '@expo/vector-icons'; 
 import Navbar from '../components/Navbar';// Don't forget this import
+import Header from '../components/Header';
 
 const VoiceToVoiceScreen = ({ navigation }) => {
   const [recording, setRecording] = useState(null);
@@ -100,6 +101,7 @@ const VoiceToVoiceScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <Header/>
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <Text style={styles.title}>🎤 Voice-to-Voice Translator</Text>
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#f2f2f2',
+    
   },
   container: {
     flex: 1,
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 30,
+    marginTop:40,
   },
   recordingIndicator: {
     flexDirection: 'row',

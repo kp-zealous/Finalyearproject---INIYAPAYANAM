@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import {
-  View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { auth } from '../config/firebase';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  updateProfile
+  updateProfile,
 } from 'firebase/auth';
 
 export default function LoginScreen({ navigation }) {
@@ -47,46 +56,52 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Iniyapayanam</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Image
+          source={require('../../assets/img/Logo.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.title}>Iniyapayanam</Text>
 
-      {isRegistering && (
+        {isRegistering && (
+          <TextInput
+            style={styles.input}
+            placeholder="Full Name"
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+          />
+        )}
+
         <TextInput
           style={styles.input}
-          placeholder="Full Name"
-          value={name}
-          onChangeText={setName}
-          autoCapitalize="words"
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
         />
-      )}
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <Button
+          title={isRegistering ? "Register" : "Login"}
+          onPress={isRegistering ? handleRegister : handleLogin}
+        />
 
-      <Button
-        title={isRegistering ? "Register" : "Login"}
-        onPress={isRegistering ? handleRegister : handleLogin}
-      />
-
-      <TouchableOpacity onPress={() => setIsRegistering(!isRegistering)}>
-        <Text style={styles.link}>
-          {isRegistering ? "Already have an account? Login" : "New user? Sign up"}
-        </Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => setIsRegistering(!isRegistering)}>
+          <Text style={styles.link}>
+            {isRegistering ? "Already have an account? Login" : "New user? Sign up"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -101,5 +116,12 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     textAlign: 'center',
     fontSize: 16
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    alignSelf: 'center',
+    marginBottom: 20
   }
 });
