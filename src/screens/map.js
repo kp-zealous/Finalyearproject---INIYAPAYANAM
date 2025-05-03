@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef,useCallback } from "react";
-import { View, Text, TextInput, FlatList, TouchableOpacity, Alert, Linking, StatusBar } from "react-native";
-import MapView, { Marker, Polyline ,Callout ,PROVIDER_GOOGLE} from "react-native-maps";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { View, Text, TextInput, FlatList, TouchableOpacity, Alert, Linking, StatusBar, Picker } from "react-native";
+import MapView, { Marker, Polyline, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import axios from "axios";
 import { StyleSheet } from 'react-native';
+import Navbar from '../components/Navbar';
 
 export default function Map() {
   const [location, setLocation] = useState(null);
@@ -17,16 +18,15 @@ export default function Map() {
   const [showstartLocation, setshowstartLocation] = useState(false);
   const [placeInfo, setPlaceInfo] = useState(null);
   const [srcSuggestions, setSrcSuggestions] = useState([]);
-
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchInputRef = useRef(null);
   const [travelTime, setTravelTime] = useState(null);
-const [distance, setDistance] = useState(null);
-
-  const token = "5bfce60b-d4f0-4ebc-a6e6-096905bad227";
+  const [distance, setDistance] = useState(null);
+  const [arrivalTime, setArrivalTime] = useState(null);
+  const [transportMode, setTransportMode] = useState('car'); // Default transport mode
 
   useEffect(
     useCallback(() => {
@@ -35,44 +35,39 @@ const [distance, setDistance] = useState(null);
 
         if (status === "granted") {
           let currentLocation = await Location.getCurrentPositionAsync({});
-    
           setCurrLocation(currentLocation);
-  
-          const defaultLatitude = 37.78825;
-          const defaultLongitude = -122.4324;
-  
           setRegion({
-            latitude: currentLocation?.coords?.latitude || defaultLatitude,
-            longitude: currentLocation?.coords?.longitude || defaultLongitude,
+            latitude: currentLocation?.coords?.latitude || 37.78825,
+            longitude: currentLocation?.coords?.longitude || -122.4324,
             latitudeDelta: 0.0522,
             longitudeDelta: 0.0421,
           });
           return;
         }
-  
+
         let { status: newStatus } = await Location.requestForegroundPermissionsAsync();
         if (newStatus !== "granted") {
           setErrorMsg("Permission to access location was denied");
           showPermissionDeniedAlert();
           return;
         }
-  
+
         let currentLocation = await Location.getCurrentPositionAsync({});
         setLocation(currentLocation);
         setCurrLocation(currentLocation);
         setRegion({
           latitude: currentLocation.coords.latitude,
           longitude: currentLocation.coords.longitude,
-          latitudeDelta: 0.005,  // lower = more zoom
+          latitudeDelta: 0.005,
           longitudeDelta: 0.005,
-                });
+        });
       };
-  
+
       getPermissions();
-    }, []) // <- empty dependency array to run only on focus
+    }, [])
   );
-    useEffect(() => {
-      
+
+  useEffect(() => {
     if (searchInputRef.current) {
       searchInputRef.current.focus();
     }
@@ -96,26 +91,20 @@ const [distance, setDistance] = useState(null);
     setDestCoords(null);
     setSrcSuggestions([]);
     setTravelTime(null);
-setDistance(null);
-setRouteCoords(null);
-
-
+    setDistance(null);
+    setArrivalTime(null);
+    setRouteCoords(null);
   };
 
   const getAddressSuggestions = async (query) => {
-    const url1 =
+    const url =
       "https://autosuggest.search.hereapi.com/v1/autosuggest?" +
-      "at=" +
-      currlocation?.coords.latitude +
-      "," +
-      currlocation?.coords.longitude +
-      "&limit=5" +
-      "&q=" +
-      encodeURIComponent(query) +
+      "at=" + currlocation?.coords.latitude + "," + currlocation?.coords.longitude +
+      "&limit=5&q=" + encodeURIComponent(query) +
       "&apiKey=POEKk48VtQlfNLrBNRi2hhisA2gCvxdkdPABNpsvsck";
 
     try {
-      const response = await axios.get(url1);
+      const response = await axios.get(url);
       setSuggestions(response.data.items || []);
       return response.data.items || [];
     } catch (error) {
@@ -123,16 +112,13 @@ setRouteCoords(null);
       return [];
     }
   };
+
   const getStartLocationSuggestions = async (query) => {
-    const url =       "https://autosuggest.search.hereapi.com/v1/autosuggest?" +
-    "at=" +
-    currlocation?.coords.latitude +
-    "," +
-    currlocation?.coords.longitude +
-    "&limit=5" +
-    "&q=" +
-    encodeURIComponent(query) +
-    "&apiKey=POEKk48VtQlfNLrBNRi2hhisA2gCvxdkdPABNpsvsck";
+    const url =
+      "https://autosuggest.search.hereapi.com/v1/autosuggest?" +
+      "at=" + currlocation?.coords.latitude + "," + currlocation?.coords.longitude +
+      "&limit=5&q=" + encodeURIComponent(query) +
+      "&apiKey=POEKk48VtQlfNLrBNRi2hhisA2gCvxdkdPABNpsvsck";
 
     try {
       const response = await axios.get(url);
@@ -142,7 +128,6 @@ setRouteCoords(null);
     }
   };
 
-
   const getRoute = async () => {
     if (!srcCoords || !destCoords) return;
 
@@ -150,7 +135,7 @@ setRouteCoords(null);
     const apiUrl =
       `https://fleet.ls.hereapi.com/2/calculateroute.json` +
       `?apiKey=${apiKey}` +
-      `&mode=fastest;car;traffic:enabled` +
+      `&mode=fastest;${transportMode};traffic:enabled` +
       `&waypoint0=${srcCoords.latitude},${srcCoords.longitude}` +
       `&waypoint1=${destCoords.latitude},${destCoords.longitude}`;
 
@@ -167,12 +152,16 @@ setRouteCoords(null);
       const travelTimeInMinutes = Math.round(routeSummary.travelTime / 60);
       const distanceInKilometers = Math.round(routeSummary.distance / 1000);
       setTravelTime(travelTimeInMinutes);
-  setDistance(distanceInKilometers);
+      setDistance(distanceInKilometers);
 
-
-      console.log(`Travel Time: ${travelTimeInMinutes} min`);
-      console.log(`Distance: ${distanceInKilometers} km`);
-
+      // Calculate time of arrival
+      const currentTime = new Date();
+      currentTime.setMinutes(currentTime.getMinutes() + travelTimeInMinutes);
+      const arrivalTime = currentTime.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      setArrivalTime(arrivalTime);
 
       const routeLeg = data.response.route[0].leg[0];
       let routeCoords = [];
@@ -193,181 +182,150 @@ setRouteCoords(null);
     }
   };
 
-
   return (
     <View style={styles.container}>
       {region && (
-        <MapView style={styles.map} initialRegion={region}   zoomControlEnabled showsTraffic
-        showsUserLocation showsMyLocationButton={true} 
-      >
-          {srcCoords && <Marker coordinate={srcCoords} title="source" pinColor="#4169E1" description={srcaddress}/>    
-}
-          {destCoords &&  <Marker coordinate={destCoords} pinColor="#FF6347">
-    <Callout>
-    <View style={{ padding: 8, maxWidth: 250 }}>
-      <Text style={{ fontSize: 14, color: '#333' }}>Source: {desaddress || 'Loading...'}</Text>
-    </View>
-    </Callout>
-  </Marker>
-}
-          {routeCoords.length > 0 && (
+        <MapView style={styles.map} initialRegion={region} zoomControlEnabled showsTraffic showsUserLocation showsMyLocationButton={true}>
+          {srcCoords && <Marker coordinate={srcCoords} title="source" pinColor="#4169E1" description={srcaddress} />}
+          {destCoords && (
+            <Marker coordinate={destCoords} pinColor="#FF6347">
+              <Callout>
+                <View style={{ padding: 8, maxWidth: 250 }}>
+                  <Text style={{ fontSize: 14, color: '#333' }}>Destination: {desaddress || 'Loading...'}</Text>
+                </View>
+              </Callout>
+            </Marker>
+          )}
+          {routeCoords?.length > 0 && (
             <Polyline coordinates={routeCoords} strokeWidth={5} strokeColor="blue" />
           )}
         </MapView>
       )}
 
       <View style={styles.searchBoxContainer}>
-      <View style={{ position: 'relative', width: '100%' }}>
-  <TextInput
-    ref={searchInputRef}
-    placeholder="Search for a location"
-    value={desaddress}
-    onChangeText={(text) => {
-      getAddressSuggestions(text);
-      setdesAddress(text);
-    }}
-    style={styles.desinput}
-    onSubmitEditing={() => setshowstartLocation(true)}
-  />
-  {desaddress && (
-    <TouchableOpacity
-      style={styles.clearButton}
-      onPress={() => setdesAddress('')}
-    >
-      <Text style={styles.clearText}>✖</Text>
-    </TouchableOpacity>
-  )}
-</View>
+        <View style={{ position: 'relative', width: '100%' }}>
+          <TextInput
+            ref={searchInputRef}
+            placeholder="Search for a location"
+            value={desaddress}
+            onChangeText={(text) => {
+              getAddressSuggestions(text);
+              setdesAddress(text);
+            }}
+            style={styles.desinput}
+            onSubmitEditing={() => setshowstartLocation(true)}
+          />
+          {desaddress && (
+            <TouchableOpacity style={styles.clearButton} onPress={() => setdesAddress('')}>
+              <Text style={styles.clearText}>✖</Text>
+            </TouchableOpacity>
+          )}
+        </View>
 
-  {suggestions.length > 0 && (
-    <FlatList
-      data={suggestions?.slice(0, 10) ?? []}
-      keyExtractor={(item, index) => item.id?.toString() || index.toString()}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
-            setQuery(item.title);
-            setdesAddress(item.title);
-            setDestCoords({
-              latitude: item.position.lat,
-              longitude: item.position.lng,
-            });
-            setSuggestions([]);
-          }}
-          style={{
-            padding: 12,
-            borderBottomWidth: 1,
-            borderBottomColor: "#ddd",
-            backgroundColor: "#fff",
-          }}
-        >
-          <Text style={{ fontSize: 16, color: "#333" }}>{item.title}</Text>
-        </TouchableOpacity>
-      )}
-    />
-  )}
+        {suggestions.length > 0 && (
+          <FlatList
+            data={suggestions.slice(0, 10)}
+            keyExtractor={(item, index) => item.id?.toString() || index.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setQuery(item.title);
+                  setdesAddress(item.title);
+                  setDestCoords({ latitude: item.position.lat, longitude: item.position.lng });
+                  setSuggestions([]);
+                }}
+                style={{
+                  padding: 12,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#ddd",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <Text style={{ fontSize: 16, color: "#333" }}>{item.title}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
 
+        {showstartLocation && (
+          <View style={{ position: 'relative', width: '100%' }}>
+            <TextInput
+              ref={searchInputRef}
+              placeholder="Search for a start location"
+              value={srcaddress}
+              onChangeText={(text) => {
+                getStartLocationSuggestions(text);
+                setsrcAddress(text);
+                setShowDropdown(true);
+              }}
+              onSubmitEditing={getRoute}
+              style={styles.srcinput}
+              onFocus={() => setShowDropdown(true)}
+            />
+            {srcaddress && (
+              <TouchableOpacity style={styles.clearButton} onPress={() => setsrcAddress('')}>
+                <Text style={styles.clearText}>✖</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
 
-  {/* Start Location Search */}
-  {showstartLocation && (
-  <View style={{ position: 'relative', width: '100%' }}>
-    <TextInput
-      ref={searchInputRef}
-      placeholder="Search for a start location"
-      value={srcaddress}
-      onChangeText={(text) => {
-        getStartLocationSuggestions(text);
-        setsrcAddress(text);
-        setShowDropdown(true);
-      }}
-      onSubmitEditing={getRoute}
-      style={styles.srcinput}
-      onFocus={() => setShowDropdown(true)}
-    />
-    {srcaddress && (
-      <TouchableOpacity
-        style={styles.clearButton}
-        onPress={() => setsrcAddress('')}
-      >
-        <Text style={styles.clearText}>✖</Text>
-      </TouchableOpacity>
-    )}
-  </View>
-)}
-  {srcSuggestions.length > 0 && (
-    <FlatList
-      data={srcSuggestions.slice(0, 10)}
-      keyExtractor={(item, index) => item.id?.toString() || index.toString()}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
-            setsrcAddress(item.title);
-            setSrcCoords({
-              latitude: item.position.lat,
-              longitude: item.position.lng,
-            });
-            setSrcSuggestions([]);
-          }}
-          style={{
-            padding: 12,
-            borderBottomWidth: 1,
-            borderBottomColor: '#ddd',
-            backgroundColor: '#fff',
-          }}
-        >
-          <Text style={{ fontSize: 16, color: '#333' }}>{item.title}</Text>
-        </TouchableOpacity>
-      )}
-    />
-  )}
+        {srcSuggestions.length > 0 && (
+          <FlatList
+            data={srcSuggestions.slice(0, 10)}
+            keyExtractor={(item, index) => item.id?.toString() || index.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setsrcAddress(item.title);
+                  setSrcCoords({ latitude: item.position.lat, longitude: item.position.lng });
+                  setSrcSuggestions([]);
+                }}
+                style={{
+                  padding: 12,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#ddd',
+                  backgroundColor: '#fff',
+                }}
+              >
+                <Text style={{ fontSize: 16, color: '#333' }}>{item.title}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
 
-
-  {/* Dropdown for "Your Location" */}
-  {showDropdown && (
-    <View style={styles.dropdown}>
-      <TouchableOpacity
-        style={styles.dropdownItem}
-        onPress={() => {
-          setsrcAddress('Your Location');
-          setSrcCoords({
-            latitude: currlocation?.coords.latitude || 37.78825,
-            longitude: currlocation?.coords.longitude || -122.4324,
-          });
-          setShowDropdown(false);
-        }}
-      >
-        <Text>Your Location</Text>
-      </TouchableOpacity>
-    </View>
-  )}
+        {showDropdown && (
+          <View style={styles.dropdown}>
+            <TouchableOpacity
+              style={styles.dropdownItem}
+              onPress={() => {
+                setsrcAddress('Your Location');
+                setSrcCoords({
+                  latitude: currlocation?.coords.latitude || 37.78825,
+                  longitude: currlocation?.coords.longitude || -122.4324,
+                });
+                setShowDropdown(false);
+              }}
+            >
+              <Text>Your Location</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       <View style={styles.routeContainer}>
-  {!travelTime && !distance ? (
-    <TouchableOpacity
-      style={styles.startButton}
-      onPress={() => {
-        getRoute();
-      }}
-    >
-      <Text style={styles.buttonText}>Start</Text>
-    </TouchableOpacity>
-  ) : (
-    <View style={styles.routeDetailsCard}>
-      <Text style={styles.infoText}>Estimated Time: {travelTime} min</Text>
-      <Text style={styles.infoText}>Distance: {distance} km</Text>
-      <TouchableOpacity
-      style={styles.startButton}
-      onPress={() => {
-        getRoute();
-      }}
-    >
-      <Text style={styles.buttonText}>Start</Text>
-    </TouchableOpacity>
+        {travelTime && distance && (
+          <View style={styles.routeDetailsCard}>
+            <Text style={styles.infoText}>Estimated Time: {travelTime} min</Text>
+            <Text style={styles.infoText}>Distance: {distance} km</Text>
+            {arrivalTime && (
+              <Text style={styles.infoText}>Estimated Arrival: {arrivalTime}</Text>
+            )}
+          </View>
+        )}
+      </View>
 
-    </View>
-  )}
-</View>
+      <Navbar />
     </View>
   );
 }
@@ -387,45 +345,37 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,
-    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingVertical: 10,
-    paddingRight: 35, // Ensure space for the ✖ button inside input
-
+    paddingRight: 35,
   },
   srcinput: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,
-    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingVertical: 10,
-    paddingRight: 35, // Ensure space for the ✖ button inside input
-
+    paddingRight: 35,
   },
-
+  clearButton: {
+    position: 'absolute',
+    right: 10,
+    padding: 5,
+    zIndex: 1,
+  },
+  clearText: {
+    fontSize: 18,
+    color: "#888",
+  },
   dropdown: {
     backgroundColor: '#fff',
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 10,
-  
   },
-  clearButton: {
-    position: 'absolute',
-    right: 10, // Adjust the right distance to ensure it fits inside
-    padding: 5,
-    zIndex: 1, // Make sure the button is above the input
-  },
-  
-  clearText: {
-    fontSize: 18,
-    color: "#888",
-  },
-
   dropdownItem: {
     padding: 10,
     borderBottomColor: '#ccc',
@@ -434,18 +384,6 @@ const styles = StyleSheet.create({
   routeContainer: {
     margin: 16,
     alignItems: "center",
-  },
-  startButton: {
-    backgroundColor: "#007bff",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 25,
-    elevation: 3,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
   },
   routeDetailsCard: {
     backgroundColor: "#fff",
@@ -458,10 +396,11 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
     alignItems: "flex-start",
+    marginBottom:90,
   },
   infoText: {
     fontSize: 16,
     color: "#333",
     marginVertical: 4,
   },
-  });
+});

@@ -15,27 +15,28 @@ import VoiceToVoiceScreen from './src/screens/translator';
 import TripPlanScreen from './src/screens/TripPlanScreen'; 
 import Emergency_Contact_Screen from './src/screens/emergency_contact';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Expense" component={ExpenseScreen} />
-        <Stack.Screen name="NewTrip" component={NewTripScreen} options={{ title: 'Start Trip' }} />
-        <Stack.Screen name="TripList" component={TripListScreen} />
-        <Stack.Screen name="EditTrip" component={EditTripScreen} />    
-        <Stack.Screen name="TripDetails" component={TripDetailsScreen} />
-        <Stack.Screen name="Map" component={Map} />
-        <Stack.Screen name="translator" component={VoiceToVoiceScreen} />
-        <Stack.Screen name="TripPlan" component={TripPlanScreen} />
-        <Stack.Screen name="emergency_contact" component={Emergency_Contact_Screen} />
-
-
-
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Expense" component={ExpenseScreen} />
+          <Stack.Screen name="NewTrip" component={NewTripScreen} options={{ title: 'Start Trip' }} />
+          <Stack.Screen name="TripList" component={TripListScreen} />
+          <Stack.Screen name="EditTrip" component={EditTripScreen} />    
+          <Stack.Screen name="TripDetails" component={TripDetailsScreen} />
+          <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen name="translator" component={VoiceToVoiceScreen} />
+          <Stack.Screen name="TripPlan" component={TripPlanScreen} />
+          <Stack.Screen name="emergency_contact" component={Emergency_Contact_Screen} />
+     
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

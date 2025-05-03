@@ -14,6 +14,7 @@ import Checkbox from 'expo-checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import Navbar from '../components/Navbar';
 
 export default function EditTripScreen({ route, navigation }) {
   const { tripId } = route.params;
@@ -231,6 +232,7 @@ export default function EditTripScreen({ route, navigation }) {
       />
 
       <Button title="Update Trip" onPress={handleUpdateTrip} />
+      <Navbar/>
     </ScrollView>
   );
 }

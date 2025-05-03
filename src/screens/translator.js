@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { Audio } from 'expo-av';
 import { AudioPlayer } from './Audioplayer'; 
-import { Ionicons } from '@expo/vector-icons'; // Don't forget this import
+import { Ionicons } from '@expo/vector-icons'; 
+import Navbar from '../components/Navbar';// Don't forget this import
 
 const VoiceToVoiceScreen = ({ navigation }) => {
   const [recording, setRecording] = useState(null);
@@ -151,23 +152,7 @@ const VoiceToVoiceScreen = ({ navigation }) => {
           )}
         </ScrollView>
 
-        <View style={styles.navbar}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Ionicons name="home" size={24} color="#007AFF" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Expense')}>
-            <Ionicons name="wallet" size={24} color="#007AFF" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Map')}>
-            <Ionicons name="map" size={24} color="#007AFF" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('AIAssistant')}>
-            <Ionicons name="mic" size={24} color="#007AFF" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
-            <Ionicons name="airplane" size={24} color="#007AFF" />
-          </TouchableOpacity>
-        </View>
+        <Navbar/>
       </View>
     </SafeAreaView>
   );
@@ -181,6 +166,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
+    marginTop:30,
   },
   scrollContent: {
     padding: 20,

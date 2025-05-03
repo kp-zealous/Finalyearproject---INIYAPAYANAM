@@ -6,43 +6,47 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import {
   collection,
   query,
   where,
   orderBy,
-  onSnapshot
+  onSnapshot,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { getAuth } from 'firebase/auth';
-import { Ionicons } from '@expo/vector-icons'; // ✅ Make sure expo/vector-icons is installed
+import { Ionicons } from '@expo/vector-icons';
+import Navbar from '../components/Navbar';
+
+const { width } = Dimensions.get('window');
 
 export default function TripListScreen({ navigation }) {
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
   const [search, setSearch] = useState('');
 
-    useEffect(() => {
-      const auth = getAuth();
-      const user = auth.currentUser;
+  useEffect(() => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-      if (!user) return;
+    if (!user) return;
 
-      const q = query(
-        collection(db, 'trips'),
-        where('userId', '==', user.uid),
-        orderBy('startDate', 'desc')
-      );
+    const q = query(
+      collection(db, 'trips'),
+      where('userId', '==', user.uid),
+      orderBy('startDate', 'desc')
+    );
 
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const list = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setTrips(list);
-        setFilteredTrips(list);
-      });
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTrips(list);
+      setFilteredTrips(list);
+    });
 
     return () => unsubscribe();
   }, []);
@@ -69,14 +73,17 @@ export default function TripListScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🧳 My Planned Trips</Text>
+      <View style={styles.headerWrapper}>
+        <Text style={styles.title}>🧳 My Trips</Text>
 
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search by destination or date"
-        value={search}
-        onChangeText={setSearch}
-      />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search destination or date"
+          placeholderTextColor="#666"
+          value={search}
+          onChangeText={setSearch}
+        />
+      </View>
 
       <FlatList
         data={filteredTrips}
@@ -91,90 +98,101 @@ export default function TripListScreen({ navigation }) {
               })
             }
           >
-            <Text style={styles.tripName}>{item.destination}</Text>
-            <Text style={styles.date}>
-              {formatDate(item.startDate)} → {formatDate(item.endDate)}
-            </Text>
+            <View style={styles.cardTop}>
+              <Ionicons name="location-sharp" size={20} color="#007AFF" />
+              <Text style={styles.tripName}>{item.destination}</Text>
+            </View>
+            <View style={styles.cardBottom}>
+              <Ionicons name="calendar" size={16} color="#666" />
+              <Text style={styles.date}>
+                {formatDate(item.startDate)} → {formatDate(item.endDate)}
+              </Text>
+            </View>
           </TouchableOpacity>
         )}
-        ListEmptyComponent={<Text style={styles.noTrips}>No trips found.</Text>}
+        ListEmptyComponent={
+          <Text style={styles.noTrips}>No trips found. Plan your next adventure!</Text>
+        }
+        contentContainerStyle={{ paddingBottom: 100 }}
       />
 
-      {/* 👇 Floating Button */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => navigation.navigate('NewTrip')} // 👈 make sure this screen exists in your navigator
+        onPress={() => navigation.navigate('NewTrip')}
       >
         <Ionicons name="add" size={30} color="#fff" />
       </TouchableOpacity>
-                {/* Bottom Navigation */}
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Expense')}>
-          <Ionicons name="wallet" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
-          <Ionicons name="map" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('translator')}>
-          <Ionicons name="mic" size={24} color="#007AFF" />
-        </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
-          <Ionicons name="airplane" size={24} color="#007AFF" />
-        </TouchableOpacity>
-      </View>
+      <Navbar />
     </View>
-
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f5f7fa' },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    color: '#007AFF',
+  container: {
+    flex: 1,
+    backgroundColor: '#E9F1FA',
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    height: 60,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '110%',
+  headerWrapper: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#005BBB',
+    marginBottom: 10,
   },
   searchInput: {
     backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 15,
-    borderWidth: 1,
+    padding: 12,
+    borderRadius: 12,
     borderColor: '#ccc',
+    borderWidth: 1,
+    fontSize: 16,
+    color: '#333',
   },
   card: {
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    backgroundColor: '#fff',
+    padding: 18,
+    borderRadius: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
   },
-  tripName: { fontSize: 18, fontWeight: 'bold' },
-  date: { color: '#555', marginTop: 4 },
-  noTrips: { textAlign: 'center', marginTop: 50, color: '#999' },
-
-  // 👇 Floating Action Button Styles
+  cardTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  cardBottom: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tripName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#005BBB',
+    marginLeft: 8,
+  },
+  date: {
+    fontSize: 14,
+    color: '#666',
+    marginLeft: 6,
+  },
+  noTrips: {
+    textAlign: 'center',
+    color: '#888',
+    marginTop: 40,
+    fontSize: 16,
+  },
   fab: {
     position: 'absolute',
-    bottom: 65,
+    bottom: 100,
     right: 30,
     backgroundColor: '#007AFF',
     width: 60,
@@ -182,10 +200,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 5,
     shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
+    elevation: 5,
   },
 });

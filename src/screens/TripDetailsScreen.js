@@ -11,7 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { Ionicons } from '@expo/vector-icons';
-import { Dimensions } from 'react-native'; // Added for responsive design
+import { Dimensions } from 'react-native'; 
+import Navbar from '../components/Navbar';//// Added for responsive design
 
 export default function TripDetailsScreen({ route }) {
   const { trip, tripId, userId } = route.params;  // Added userId here
@@ -168,30 +169,13 @@ export default function TripDetailsScreen({ route }) {
       </ScrollView>
 
       {/* Navbar */}
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home" size={24} color="#00A1D6" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Expense')}>
-          <Ionicons name="wallet" size={24} color="#00A1D6" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
-          <Ionicons name="map" size={24} color="#00A1D6" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('translator')}>
-          <Ionicons name="mic" size={24} color="#00A1D6" />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('TripList')}>
-          <Ionicons name="airplane" size={24} color="#00A1D6" />
-        </TouchableOpacity>
-      </View>
+      <Navbar/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20, marginBottom: 60 },
+  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20, marginBottom: 60,margintop:20, },
   scrollViewContent: {
     paddingBottom: 80, // Space at the bottom for the navbar
   },
@@ -265,19 +249,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#ffffff',
-    padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-  },
+ 
   icon: {
     marginRight: 8,
   },
