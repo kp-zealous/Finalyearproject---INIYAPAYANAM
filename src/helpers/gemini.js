@@ -13,6 +13,9 @@ export async function autoPlanTripUsingGemini(tripDetails, tripId) {
       - Number of People: ${tripDetails.people}
       - Budget: ₹${tripDetails.budget}
       - Preferred Transport Modes: ${tripDetails.transportModes.join(', ')}
+      -Mood/Emotion: ${tripDetails.emotion}
+      -Places to Visit (if any): ${tripDetails.places || 'User has not specified'}
+      -Special Requirements / Notes: ${tripDetails.notes || 'None'}
       
       Requirements:
       - Famous and must-visit places, avoid peak hours

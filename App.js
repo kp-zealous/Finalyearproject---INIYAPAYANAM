@@ -18,6 +18,7 @@ import EmergencyContactScreen from './src/screens/emergency_contact';
 import ProfileScreen from './src/screens/ProfileScreen';
 import CompanyProfileScreen from './src/screens/companyprofilescreen'; 
 import FeedbackScreen from './src/screens/Complaint';
+import LocalEvent from './src/screens/localevents';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,8 @@ export default function App() {
           
           {/* Feedback Screen */}
           <Stack.Screen name="ComplaintFeedback" component={FeedbackScreen} options={{ title: 'ComplaintFeedback' }} />
+          <Stack.Screen name="LocalEvent" component={LocalEvent} options={{ title: 'LocalEvent' }} />
+
           
         </Stack.Navigator>
       </NavigationContainer>

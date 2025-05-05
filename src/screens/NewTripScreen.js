@@ -27,6 +27,8 @@ export default function NewTripScreen({ navigation }) {
   const [budget, setBudget] = useState('');
   const [travelers, setTravelers] = useState('');
   const [tripName, setTripName] = useState('');
+  const [emotion, setEmotion] = useState('');
+
   const [transportModes, setTransportModes] = useState({
     bus: false,
     train: false,
@@ -42,7 +44,19 @@ export default function NewTripScreen({ navigation }) {
   const toggleTransport = (mode) => {
     setTransportModes((prev) => ({ ...prev, [mode]: !prev[mode] }));
   };
-
+  const emotions = [
+    'Romantic',
+    'Spiritual',
+    'Friends',
+    'Colleague',
+    'Family',
+    'Solo',
+    'Adventure',
+    'Relaxation',
+    'Cultural Exploration',
+    'Celebration',
+  ];
+  
   const formatDate = (date) => date.toISOString().split('T')[0];
 
   const handleStartTrip = async () => {
@@ -68,6 +82,7 @@ export default function NewTripScreen({ navigation }) {
       travelers,
       transportModes: selectedModes,
       travelStyle,
+      emotion,
       places,
       notes,
       createdAt: new Date().toISOString(),
@@ -175,6 +190,22 @@ export default function NewTripScreen({ navigation }) {
           </TouchableOpacity>
         ))}
       </View>
+      <Text style={styles.sectionTitle}>How are you feeling?</Text>
+      <View style={styles.emotionContainer}>
+  {emotions.map((emotion) => (
+    <TouchableOpacity
+      key={emotion}
+      style={[
+        styles.emotionChip,
+        selectedEmotion === emotion && styles.selectedEmotion,
+      ]}
+      onPress={() => setSelectedEmotion(emotion)}
+    >
+      <Text style={styles.emotionText}>{emotion}</Text>
+    </TouchableOpacity>
+  ))}
+</View>
+
 
       <TextInput
         style={styles.input}
@@ -235,4 +266,27 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   radioSelected: { height: 10, width: 10, borderRadius: 5, backgroundColor: '#007AFF' },
+  emotionContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 15,
+  },
+  emotionChip: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginRight: 10,
+    marginBottom: 10,
+    backgroundColor: '#f2f2f2',
+  },
+  emotionChipSelected: {
+    backgroundColor: '#007AFF',
+    borderColor: '#007AFF',
+  },
+  emotionText: {
+    color: '#333',
+  },
+  
 });

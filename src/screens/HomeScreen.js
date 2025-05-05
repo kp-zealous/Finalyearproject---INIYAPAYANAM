@@ -70,6 +70,11 @@ export default function HomeScreen({ navigation }) {
               <MaterialCommunityIcons name="comment-question" size={30} color="#FF5722" />
               <Text style={styles.tileText}>Complaint/Feedback</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.tile} onPress={() => navigation.navigate('LocalEvent')}>
+  <Ionicons name="calendar" size={30} color="#9C27B0" />
+  <Text style={styles.tileText}>Local Events</Text>
+</TouchableOpacity>
+
           </View>
 
 

@@ -103,7 +103,7 @@ export default function TripListScreen({ navigation }) {
           >
             <View style={styles.cardTop}>
               <Ionicons name="location-sharp" size={20} color="#007AFF" />
-              <Text style={styles.tripName}>{item.destination}</Text>
+              <Text style={styles.tripName}>{item.tripName}</Text>
             </View>
             <View style={styles.cardBottom}>
               <Ionicons name="calendar" size={16} color="#666" />
