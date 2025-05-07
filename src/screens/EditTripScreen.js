@@ -116,6 +116,8 @@ export default function EditTripScreen({ route, navigation }) {
       Alert.alert('Success', 'Trip updated successfully');
       navigation.goBack();
     } catch (err) {
+      console.error('Firestore update error:', err); // Add this
+
       Alert.alert('Error', 'Failed to update trip');
     }
   };

@@ -102,7 +102,7 @@ export default function NewTripScreen({ navigation }) {
   return (
     <>
     <Header/>
-    <ScrollView contentContainerStyle={{ paddingTop:90,paddingBottom: 120 }}>
+    <ScrollView contentContainerStyle={{ paddingTop:90,paddingBottom: 120 ,margin:15}}>
       <Text style={styles.title}>🚀 Plan Your Trip</Text>
       <TextInput
         style={styles.input}
@@ -190,16 +190,16 @@ export default function NewTripScreen({ navigation }) {
           </TouchableOpacity>
         ))}
       </View>
-      <Text style={styles.sectionTitle}>How are you feeling?</Text>
+      <Text style={styles.sectionTitle}>Pick Your Travel Style</Text>
       <View style={styles.emotionContainer}>
   {emotions.map((emotion) => (
     <TouchableOpacity
       key={emotion}
       style={[
         styles.emotionChip,
-        selectedEmotion === emotion && styles.selectedEmotion,
+        emotion === emotion,
       ]}
-      onPress={() => setSelectedEmotion(emotion)}
+      onPress={() => setEmotion(emotion)}
     >
       <Text style={styles.emotionText}>{emotion}</Text>
     </TouchableOpacity>
@@ -233,7 +233,8 @@ const styles = StyleSheet.create({
     
     flex: 1, 
     backgroundColor: '#FFFFFF', 
-    padding: 30, 
+    padding: 30,
+    marginLeft:10, 
     paddingBottom: 120, // Increase padding to prevent hidden button
   },
 
