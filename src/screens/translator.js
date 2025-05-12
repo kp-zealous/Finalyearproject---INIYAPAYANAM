@@ -75,7 +75,7 @@ const VoiceToVoiceScreen = ({ navigation }) => {
         type: 'audio/wav',
       });
 
-      const response = await fetch("http://192.168.29.234:5000/translate", {
+      const response = await fetch("http://192.168.78.187:5000/translate", {
         method: 'POST',
         body: formData,
         headers: {
@@ -147,7 +147,7 @@ const VoiceToVoiceScreen = ({ navigation }) => {
               {Object.keys(audioResults).filter(key => key !== 'transcript').map((lang) => (
                 <View key={lang} style={styles.translationItem}>
                   <Text style={styles.label}>{lang.toUpperCase()}:</Text>
-                  <AudioPlayer uri={`http://192.168.29.234:5000/audio/${audioResults[lang].split('/').pop()}`} />
+                  <AudioPlayer uri={`http://192.168.78.187:5000/audio/${audioResults[lang].split('/').pop()}`} />
                 </View>
               ))}
             </View>
