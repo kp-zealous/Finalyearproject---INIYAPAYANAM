@@ -59,9 +59,55 @@ Whether you're a solo explorer, a romantic couple, or a spiritual seeker, Iniyap
    cd iniyapayanam
 
 2. **Install dependencies:**
-   ```bash
-   npm install
-3. **Start the app:**
+
+```
+npm install
+
+
+
+If you face version conflicts or dependency errors, run:
+
+```
+npm install expo@latest
+npm install --legacy-peer-deps
+npm audit fix
+
+3. **Firebase Auth Fix**
+Create a metro.config.js file in the root directory:
+
+```
+const { getDefaultConfig } = require('expo/metro-config');
+const defaultConfig = getDefaultConfig(__dirname);
+
+defaultConfig.resolver.sourceExts.push('cjs'); // For Firebase compatibility
+defaultConfig.resolver.unstable_enablePackageExports = false;
+
+module.exports = defaultConfig;
+
+4. **Run the Translator (Python Server)**
+The translator handles real-time translation and runs as a Python server.
+
+Navigate to the directory containing translator.py
+
+Update IP address in two places inside translator.py (e.g., 0.0.0.0 or your local IP)
+
+Start the server:
+
+```
+python translator.py
+
+⚠️ Ensure the Python server is running in the background while using translation features in the app.
+
+5. **Start the App**
+```
+npx expo start
+Use the QR code shown in the terminal to open the app in Expo Go on your mobile device.
+
+If you face cache issues:
+
+```
+npx expo start -c
+
 Android:
 ``` npm run android
 
@@ -73,9 +119,7 @@ Web:
 
 Expo is used for cross-platform development. Make sure Expo CLI is installed (npm install -g expo-cli).
 
----
-
-##  📦 Dependencies
+## 📦 Dependencies
 
 Listed from your package.json
 
